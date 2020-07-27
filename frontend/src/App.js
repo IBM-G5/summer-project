@@ -9,12 +9,15 @@ import {BrowserRouter as Router, Route, Switch, Link, Redirect} from 'react-rout
 
 function App() {
   return (
-    <Router>
+    <div>
+      <Router>
       <Switch>
         <Route exact path="/" component ={LoginPage}></Route>
         <Route exact path="/guest" component ={GuestPage}></Route>
       </Switch>
-    </Router>
+      </Router>
+    </div>
+
   );
 }
 
