@@ -1,6 +1,7 @@
 package com.summerproject.project.service;
 
 
+import com.summerproject.project.entity.Teacher;
 import com.summerproject.project.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,11 @@ public class TeacherServiceImpl implements TeacherService{
     public void save(Teacher teacher) {
         teacher.setPassword(bCryptPasswordEncoder.encode(teacher.getPassword()));
 
-        TeacherRepository.save(teacher);
+        teacherRepository.save(teacher);
     }
 
     @Override
     public Teacher findByName(String name) {
         return teacherRepository.findByName(name);
     }
-}
 }

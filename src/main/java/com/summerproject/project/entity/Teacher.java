@@ -16,9 +16,15 @@ public class Teacher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column()
+    @Column
     private int id;
 
     @Column
     private String name;
+
+    @Column
+    private String email;
+
+    @Column
+    private String password;
 }
