@@ -68,7 +68,32 @@ class GuestPageContainer extends Component {
               </tbody>
             </Table>
           </Tab>
-          <Tab eventKey="an3" title="Anul 3" ></Tab>
+          <Tab eventKey="an3" title="Anul 3" >
+          <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Faculty</th>
+                  <th>Year of Study</th>
+                  <th>Course</th>
+                  <th>Teacher</th>
+                  <th>Date</th>
+                  <th>Class</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>Automatica si Calculatoare</td>
+                  <td>1</td>
+                  <td>Analiza Matematica</td>
+                  <td>Paunescu</td>
+                  <td>10.20.2020</td>
+                  <td>A101</td>
+                </tr>
+
+              </tbody>
+            </Table>
+          </Tab>
         </Tabs>
       </Container>
     );
