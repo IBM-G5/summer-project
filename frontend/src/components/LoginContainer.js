@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import LoginForm from "./LoginForm";
+import LoginForm from "../components/LoginForm"
 
 import TeacherIllustration from "../img/undraw_teaching_f1cm.svg";
 

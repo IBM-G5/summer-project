@@ -15,10 +15,11 @@ class LoginForm extends Component {
       <>
         <p className="text-left">
           <img src={logoTransparent} width="30%" alt="login illustration" />
-          Professors Login
+          <b>Professors Login</b>
         </p>
         <Container className="mt-5">
           <img src={loginSmallSvg} width="55%" alt="login illustration"></img>
+
           <Form className="mt-5">
             <Form.Group controlId="formBasicEmail">
               <Form.Control type="email" placeholder="Email Address" />
@@ -27,6 +28,7 @@ class LoginForm extends Component {
             <Form.Group controlId="formBasicPassword">
               <Form.Control type="password" placeholder="Password" />
             </Form.Group>
+          </Form>
 
             <Container>
               <Row>
@@ -42,12 +44,14 @@ class LoginForm extends Component {
                 </Col>
               </Row>
             </Container>
-          </Form>
+          
+
           <Container className="mt-5 pb-3">
-            <a href="#" className="text-muted nounderline small">
+            <a href="./guest" className="text-muted nounderline small">
               Not a professor? <b>Continue as a guest</b>
             </a>
           </Container>
+          
         </Container>
       </>
     );
