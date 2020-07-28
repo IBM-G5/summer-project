@@ -1,28 +1,20 @@
 package com.summerproject.project.service;
 
-
-import com.summerproject.project.entity.Teacher;
 import com.summerproject.project.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class TeacherServiceImpl implements TeacherService{
+
     @Autowired
     private TeacherRepository teacherRepository;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @Override
-    public void save(Teacher teacher) {
-        teacher.setPassword(bCryptPasswordEncoder.encode(teacher.getPassword()));
-
-        teacherRepository.save(teacher);
+    public boolean checkLogin(String email, String password) {
+        return teacherRepository.existsTeachersByEmailAndPassword(email, password);
     }
 
-    @Override
-    public Teacher findByName(String name) {
-        return teacherRepository.findByName(name);
-    }
+
 }
