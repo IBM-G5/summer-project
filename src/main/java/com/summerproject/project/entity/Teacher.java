@@ -23,8 +23,8 @@ public class Teacher {
     private String name;
 
     @Column
-    private String email;
+    public String email;
 
     @Column
-    private String password;
+    public String password;
 }
