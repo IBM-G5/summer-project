@@ -21,7 +21,7 @@ dependencies {
 	}
 
 	// https://mvnrepository.com/artifact/org.springframework.plugin/spring-plugin-core
-	compile group: 'org.springframework.plugin', name: 'spring-plugin-core', version: '2.0.0.RELEASE'
+	//compile group: 'org.springframework.plugin', name: 'spring-plugin-core', version: '2.0.0.RELEASE'
 
 
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.10'
@@ -37,6 +37,13 @@ dependencies {
 	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+	// https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.10.Final'
+
+	// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+
 
 
 	compileOnly 'org.projectlombok:lombok:1.18.12'
