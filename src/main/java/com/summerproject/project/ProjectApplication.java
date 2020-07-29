@@ -25,5 +25,4 @@ public class ProjectApplication {
 				.apis(RequestHandlerSelectors.basePackage("com.summerproject.project")).build();
 	}
 
-
 }

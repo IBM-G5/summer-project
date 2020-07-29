@@ -1,9 +1,6 @@
 package com.summerproject.project.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +8,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 public class Exam {
 
@@ -22,12 +20,12 @@ public class Exam {
     @Column
     private int academicYear;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Faculty faculty;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Course course;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Teacher teacher;
 }

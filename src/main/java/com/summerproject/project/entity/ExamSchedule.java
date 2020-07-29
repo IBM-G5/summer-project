@@ -1,9 +1,7 @@
 package com.summerproject.project.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -12,6 +10,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 public class ExamSchedule {
 
@@ -20,7 +19,7 @@ public class ExamSchedule {
     @Column
     private int id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Exam exam;
 
     @Column
