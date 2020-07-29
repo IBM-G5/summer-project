@@ -17,10 +17,10 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    public int id;
 
     @Column
-    private String name;
+    public String name;
 
     @Column
     public String email;

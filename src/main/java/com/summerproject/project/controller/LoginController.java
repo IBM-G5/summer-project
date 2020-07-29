@@ -22,7 +22,7 @@ public class LoginController {
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public ResponseEntity<String> findTeacherForLogin(@RequestBody Teacher teacher){
         boolean result;
-        result= teacherService.checkLogin(teacher.email, teacher.password);
+        result= teacherService.checkLogin(teacher.getEmail(), teacher.getPassword());
         if (result) {
             return new ResponseEntity<String>("Autentification succesfull",HttpStatus.OK);
         }
