@@ -106,7 +106,7 @@ class LoginForm extends Component {
           </Form>
           <Container className="mt-5 pb-3">
             <a href="#" className="text-muted nounderline small">
-              Don't have an account? <b>Register</b>
+              Not a professor? <b>Continue as a guest</b>
             </a>
           </Container>
         </Container>
