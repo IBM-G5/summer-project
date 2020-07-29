@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -10,24 +9,23 @@ import loginSmallSvg from "../img/undraw_safe_bnk7.svg";
 import logoTransparent from "../img/logo_transparent.png";
 
 import axios from "axios";
-
 class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
       password: "",
-      successMessage: null,
+      successMessage: "",
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmitClick = this.handleSubmitClick.bind(this);
 
     this.API_BASE_URL = "http://localhost:8080/login";
   }
-
   redirectToHome(props) {
     props.updateTitle("Home");
     props.history.push("/home");
   }
-
   handleSubmitClick(e, props) {
     e.preventDefault();
     const payload = {
@@ -55,6 +53,12 @@ class LoginForm extends Component {
       });
   }
 
+  handleChange({ target }) {
+    this.setState({
+      [target.name]: target.value,
+    });
+  }
+
   render() {
     return (
       <>
@@ -69,22 +73,22 @@ class LoginForm extends Component {
               <Form.Control
                 type="email"
                 placeholder="Email Address"
-                onChange={(event, newValue) =>
-                  this.setState({ email: newValue })
-                }
+                onChange={this.handleChange}
+                name="email"
+                value={this.state.email}
+                onChange={this.handleChange}
               />
             </Form.Group>
-
             <Form.Group controlId="formBasicPassword">
               <Form.Control
                 type="password"
                 placeholder="Password"
-                onChange={(event, newValue) =>
-                  this.setState({ password: newValue })
-                }
+                onChange={this.handleChange}
+                name="password"
+                value={this.state.password}
+                onChange={this.handleChange}
               />
             </Form.Group>
-
             <Container>
               <Row>
                 <Col>
@@ -114,5 +118,4 @@ class LoginForm extends Component {
     );
   }
 }
-
 export default LoginForm;
