@@ -20,7 +20,7 @@ class LoginForm extends Component {
       successMessage: null,
     };
 
-    this.API_BASE_URL = "localhost:8080/login";
+    this.API_BASE_URL = "http://localhost:8080/login";
   }
 
   redirectToHome(props) {
