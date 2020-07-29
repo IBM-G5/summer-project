@@ -73,7 +73,7 @@ class LoginForm extends Component {
               <Form.Control
                 type="email"
                 placeholder="Email Address"
-                onChange={this.handleChange}
+                // onChange={this.handleChange}
                 name="email"
                 value={this.state.email}
                 onChange={this.handleChange}
@@ -83,7 +83,7 @@ class LoginForm extends Component {
               <Form.Control
                 type="password"
                 placeholder="Password"
-                onChange={this.handleChange}
+                // onChange={this.handleChange}
                 name="password"
                 value={this.state.password}
                 onChange={this.handleChange}
