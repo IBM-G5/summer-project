@@ -6,8 +6,8 @@ import com.summerproject.project.entity.ExamSchedule;
 import java.util.List;
 
 public interface ExamScheduleService {
-    void addExamSchedule(ExamScheduleDto examSchedule);
-    void deleteExamSchedule(Long id);
-    void updateExamSchedule(ExamScheduleDto examSchedule);
-    List<ExamSchedule> getAllExamSchedules();
+    ExamScheduleDto addExamSchedule(ExamScheduleDto examSchedule);
+    ExamScheduleDto deleteExamSchedule(Long id);
+    ExamScheduleDto updateExamSchedule(ExamScheduleDto examSchedule);
+    List<ExamScheduleDto> getAllExamSchedules();
 }

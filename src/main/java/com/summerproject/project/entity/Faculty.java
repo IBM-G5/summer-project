@@ -3,6 +3,7 @@ package com.summerproject.project.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,5 +19,6 @@ public class Faculty {
     private int id;
 
     @Column
+    @NotNull
     private String name;
 }

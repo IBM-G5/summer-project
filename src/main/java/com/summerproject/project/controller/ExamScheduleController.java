@@ -13,15 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequiredArgsConstructor
 public class ExamScheduleController {
 
-    private final ExamScheduleService examScheduleService;
+    @Autowired
+    ExamScheduleService examScheduleService;
 
     @PostMapping("/create")
-    ResponseEntity<String> createExamSchedule(@RequestBody ExamScheduleDto examScheduleDto) {
-        examScheduleService.addExamSchedule(examScheduleDto);
-        return new ResponseEntity<>("okay", HttpStatus.OK);
+    ExamScheduleDto createExamSchedule(@RequestBody ExamScheduleDto examScheduleDto) {
+        return examScheduleService.addExamSchedule(examScheduleDto);
     }
 
 }

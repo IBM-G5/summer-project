@@ -9,35 +9,43 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ExamScheduleServiceImpl implements ExamScheduleService{
 
-    private final ExamScheduleRepository examScheduleRepository;
-    private final ExamScheduleDtoEntityMapper examScheduleDtoEntityMapper;
+    @Autowired
+    ExamScheduleRepository examScheduleRepository;
+
+    @Autowired
+    ExamScheduleDtoEntityMapper examScheduleDtoEntityMapper;
+
     private static final Logger logger = LoggerFactory.getLogger(ExamScheduleServiceImpl.class);
 
     @Override
-    public void addExamSchedule(ExamScheduleDto examSchedule) {
+    public ExamScheduleDto addExamSchedule(ExamScheduleDto examSchedule) {
         logger.info(examSchedule.toString() + " added");
-        examScheduleRepository.save(examScheduleDtoEntityMapper.from(examSchedule));
+        return examScheduleDtoEntityMapper.from(examScheduleRepository.save(examScheduleDtoEntityMapper.from(examSchedule)));
     }
 
     @Override
-    public void deleteExamSchedule(Long id) {
+    public ExamScheduleDto deleteExamSchedule(Long id) {
         //TODO
+        return null;
     }
 
     @Override
-    public void updateExamSchedule(ExamScheduleDto examSchedule) {
+    public ExamScheduleDto updateExamSchedule(ExamScheduleDto examSchedule) {
         //TODO
+        return null;
     }
 
     @Override
-    public List<ExamSchedule> getAllExamSchedules() {
+    public List<ExamScheduleDto> getAllExamSchedules() {
         //TODO
         return null;
     }
