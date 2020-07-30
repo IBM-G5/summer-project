@@ -1,16 +1,16 @@
 package com.summerproject.project.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 public class Exam {
 
@@ -20,14 +20,16 @@ public class Exam {
     private int id;
 
     @Column
+    @Min(2015)
+    @Max(2020)
     private int academicYear;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Faculty faculty;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Course course;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Teacher teacher;
 }

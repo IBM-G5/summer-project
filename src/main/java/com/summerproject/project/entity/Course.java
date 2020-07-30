@@ -1,16 +1,15 @@
 package com.summerproject.project.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 public class Course {
 
@@ -20,5 +19,6 @@ public class Course {
     private int id;
 
     @Column
+    @NotNull
     private String name;
 }
