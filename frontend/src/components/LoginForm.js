@@ -33,9 +33,11 @@ class LoginForm extends Component {
             <Container>
               <Row>
                 <Col>
+                <a href="./professor">
                   <Button variant="primary" type="submit">
                     Login
                   </Button>
+                </a>
                 </Col>
                 <Col>
                   <a href="#" className="text-muted nounderline small">
