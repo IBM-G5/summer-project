@@ -1,30 +1,33 @@
 package com.summerproject.project.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 public class Teacher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    public int id;
 
     @Column
-    private String name;
+    @NotNull
+    public String name;
 
     @Column
+    @Email
     public String email;
 
     @Column
+    @NotNull
     public String password;
 }
