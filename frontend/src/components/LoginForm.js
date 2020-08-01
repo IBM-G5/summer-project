@@ -32,6 +32,7 @@ class LoginForm extends Component {
       email: this.state.email,
       password: this.state.password,
     };
+    console.log(payload);
     axios
       .post(this.API_BASE_URL, payload)
       .then(function (response) {
@@ -95,7 +96,7 @@ class LoginForm extends Component {
                   <Button variant="primary" type="submit">
                     Login
                   </Button>
-                </a>
+                {/*</a>*/}
                 </Col>
                 <Col>
                   <a href="#" className="text-muted nounderline small">

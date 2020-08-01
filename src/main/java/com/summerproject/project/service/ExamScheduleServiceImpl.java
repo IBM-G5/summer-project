@@ -42,11 +42,9 @@ public class ExamScheduleServiceImpl implements ExamScheduleService{
     }
 
 
-    // am adaugat parametrul de id
     @Override
     public ExamScheduleDto updateExamSchedule(Long examId, ExamScheduleDto examSchedule) throws Exception {
-        //TODO
-        //Update dupa id?
+        logger.info(" Exam update" + examSchedule.toString());
         Optional<ExamSchedule> examScheduleOptional = examScheduleRepository.findById(examId);
         examScheduleOptional.ifPresent(examSchedule1 -> {
             examScheduleDtoEntityMapper.from(examScheduleRepository.save(examScheduleDtoEntityMapper.from(examSchedule)));
@@ -59,9 +57,7 @@ public class ExamScheduleServiceImpl implements ExamScheduleService{
 
     @Override
     public List<ExamScheduleDto> getAllExamSchedules() {
-        //TODO
         logger.info(" All scheduled exams returned.");
-        //return examScheduleDtoEntityMapper.from(examScheduleRepository.findAll());
         return examScheduleRepository.findAll().stream().map(examScheduleDtoEntityMapper::from).collect(Collectors.toList());
     }
 }
