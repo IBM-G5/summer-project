@@ -12,7 +12,7 @@ import lombok.Value;
 @Builder(toBuilder = true)
 public class CourseDto {
 
-    private int id;
+    private Long id;
 
     private String name;
 }

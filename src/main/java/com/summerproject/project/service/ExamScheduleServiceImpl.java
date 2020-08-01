@@ -13,7 +13,10 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ExamScheduleServiceImpl implements ExamScheduleService{
@@ -38,15 +41,27 @@ public class ExamScheduleServiceImpl implements ExamScheduleService{
         return null;
     }
 
+
+    // am adaugat parametrul de id
     @Override
-    public ExamScheduleDto updateExamSchedule(ExamScheduleDto examSchedule) {
+    public ExamScheduleDto updateExamSchedule(Long examId, ExamScheduleDto examSchedule) throws Exception {
         //TODO
-        return null;
+        //Update dupa id?
+        Optional<ExamSchedule> examScheduleOptional = examScheduleRepository.findById(examId);
+        examScheduleOptional.ifPresent(examSchedule1 -> {
+            examScheduleDtoEntityMapper.from(examScheduleRepository.save(examScheduleDtoEntityMapper.from(examSchedule)));
+        });
+        examScheduleOptional.orElseThrow(() ->
+            new Exception(" Exam not found!")
+        );
+        return examScheduleDtoEntityMapper.from(examScheduleRepository.findById(examId).get());
     }
 
     @Override
     public List<ExamScheduleDto> getAllExamSchedules() {
         //TODO
-        return null;
+        logger.info(" All scheduled exams returned.");
+        //return examScheduleDtoEntityMapper.from(examScheduleRepository.findAll());
+        return examScheduleRepository.findAll().stream().map(examScheduleDtoEntityMapper::from).collect(Collectors.toList());
     }
 }

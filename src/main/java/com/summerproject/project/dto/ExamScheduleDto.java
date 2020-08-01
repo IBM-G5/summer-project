@@ -17,7 +17,7 @@ import java.util.Date;
 public class ExamScheduleDto {
 
 
-    private int id;
+    private Long id;
 
     private Exam exam;
 
