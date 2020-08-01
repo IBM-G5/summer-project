@@ -11,7 +11,7 @@ import lombok.Value;
 @Builder(toBuilder = true)
 public class FacultyDto {
 
-    private int id;
+    private Long id;
 
     private String name;
 

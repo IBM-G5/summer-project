@@ -15,7 +15,7 @@ import lombok.Value;
 public class ExamDto {
 
 
-    private int id;
+    private Long id;
 
     private int academicYear;
 

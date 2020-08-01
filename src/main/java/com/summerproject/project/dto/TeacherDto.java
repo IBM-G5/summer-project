@@ -9,7 +9,7 @@ import lombok.Value;
 @Value
 @Builder(toBuilder = true)
 public class TeacherDto {
-    private int id;
+    private Long id;
 
     private String name;
 
