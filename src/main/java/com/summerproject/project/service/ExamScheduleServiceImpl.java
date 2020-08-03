@@ -37,13 +37,17 @@ public class ExamScheduleServiceImpl implements ExamScheduleService{
     }
 
     @Override
-    public List<ExamScheduleDto> deleteExamSchedule(Long examId) {
+    public List<ExamScheduleDto> deleteExamSchedule(Long examId) throws Exception {
+
         Optional<ExamSchedule> examSchedule = examScheduleRepository.findById(examId);
-        examScheduleRepository.deleteById(examId);
+        examSchedule.ifPresent(examSchedule1 -> {
+            logger.info(" Exam deleted" + examSchedule.toString());
+            examScheduleRepository.deleteById(examId);
+        });
+        examSchedule.orElseThrow(() ->  new Exception(" Exam not found!"));
         return examScheduleRepository.findAll().stream().map(examScheduleDtoEntityMapper::from).collect(Collectors.toList());
-
-
     }
+
 
 
     @Override
