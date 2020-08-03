@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import logoTransparent from "../img/logo_transparent.png";
 import exams from "../datas/exams.json"
 
-class GuestPageContainer extends Component {
+class ProfessorPageContainer extends Component {
 
   render() {
 
@@ -33,7 +33,7 @@ class GuestPageContainer extends Component {
       <Container className="vCenterItems shadow p-4">
           <h5 className="text-left mb-4">
               <img src={logoTransparent} width="60px" alt="login illustration" />
-              Upcoming exams 
+              Exams 
           </h5>
         <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
           <Tab eventKey="an1" title="Anul 1">
@@ -59,4 +59,4 @@ class GuestPageContainer extends Component {
     );
   }
 }
-export default GuestPageContainer;
+export default ProfessorPageContainer;

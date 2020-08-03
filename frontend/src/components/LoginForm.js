@@ -31,6 +31,8 @@ class LoginForm extends Component {
     const payload = {
       email: this.state.email,
       password: this.state.password,
+      id: null,
+      name : null,
     };
     axios
       .post(this.API_BASE_URL, payload)
