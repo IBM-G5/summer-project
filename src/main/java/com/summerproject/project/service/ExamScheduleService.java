@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ExamScheduleService {
     ExamScheduleDto addExamSchedule(ExamScheduleDto examSchedule);
-    ExamScheduleDto deleteExamSchedule(Long id);
+    List<ExamScheduleDto> deleteExamSchedule(Long id);
     ExamScheduleDto updateExamSchedule(Long examId, ExamScheduleDto examSchedule) throws Exception;
     List<ExamScheduleDto> getAllExamSchedules();
 }

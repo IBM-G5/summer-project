@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ExamScheduleController {
 
@@ -20,8 +22,8 @@ public class ExamScheduleController {
         return examScheduleService.addExamSchedule(examScheduleDto);
     }
 
-    @DeleteMapping("/ExamSchedule/{id}")
-    ExamScheduleDto removeExamSchedule (@PathVariable Long id)
+    @DeleteMapping("/delete")
+    List<ExamScheduleDto> removeExamSchedule (@PathVariable Long id)
     {
         return examScheduleService.deleteExamSchedule(id);
     }
