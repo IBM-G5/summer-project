@@ -1,5 +1,6 @@
 package com.summerproject.project.service;
 
+import com.summerproject.project.controller.ExamScheduleController;
 import com.summerproject.project.dto.ExamScheduleDto;
 import com.summerproject.project.entity.ExamSchedule;
 import com.summerproject.project.mapper.ExamScheduleDtoEntityMapper;
@@ -36,9 +37,15 @@ public class ExamScheduleServiceImpl implements ExamScheduleService{
     }
 
     @Override
-    public ExamScheduleDto deleteExamSchedule(Long id) {
-        //TODO
-        return null;
+    public ExamScheduleDto deleteExamSchedule(Long examId) {
+        Optional<ExamSchedule> examSchedule = examScheduleRepository.findById(examId);
+        logger.info("exam deleted"+examSchedule.toString());
+        ExamScheduleService examScheduleService = null;
+        ExamScheduleDto examScheduleDto = examScheduleService.deleteExamSchedule(examId);
+        //examScheduleRepository.deleteById(examId);
+        return examScheduleDto;
+
+
     }
 
 

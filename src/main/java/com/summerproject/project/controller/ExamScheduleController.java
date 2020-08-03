@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 public class ExamScheduleController {
 
@@ -22,24 +20,13 @@ public class ExamScheduleController {
         return examScheduleService.addExamSchedule(examScheduleDto);
     }
 
-    @GetMapping("/getall")
-    public ResponseEntity<List<ExamScheduleDto>> getAllExamSchedules(){
-        List<ExamScheduleDto> listExamScheduleDto = examScheduleService.getAllExamSchedules();
-        if(listExamScheduleDto.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(listExamScheduleDto, HttpStatus.OK);
-        }
+    @DeleteMapping("/ExamSchedule/{id}")
+    ExamScheduleDto removeExamSchedule (@PathVariable Long id)
+    {
+        return examScheduleService.deleteExamSchedule(id);
     }
 
-    @PutMapping(value = "/update/{examId}")
-    public ResponseEntity<ExamScheduleDto> updateExamSchedule(@PathVariable Long examId, @RequestBody ExamScheduleDto examSchedule) throws Exception {
-        ExamScheduleDto examScheduleDto = examScheduleService.updateExamSchedule(examId, examSchedule);
-        if(examScheduleDto == null){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(examScheduleDto, HttpStatus.OK);
-        }
-    }
+
+
 
 }
