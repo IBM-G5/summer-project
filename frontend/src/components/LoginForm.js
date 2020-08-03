@@ -32,7 +32,6 @@ class LoginForm extends Component {
       email: this.state.email,
       password: this.state.password,
     };
-    console.log(payload);
     axios
       .post(this.API_BASE_URL, payload)
       .then(function (response) {
@@ -93,10 +92,13 @@ class LoginForm extends Component {
             <Container>
               <Row>
                 <Col>
-                  <Button variant="primary" type="submit">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={(event) => this.handleSubmitClick(event)}
+                  >
                     Login
                   </Button>
-                {/*</a>*/}
                 </Col>
                 <Col>
                   <a href="#" className="text-muted nounderline small">
