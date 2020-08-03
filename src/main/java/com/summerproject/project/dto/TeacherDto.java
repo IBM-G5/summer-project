@@ -1,12 +1,11 @@
 package com.summerproject.project.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
-@Value
+//@Value
 @Builder(toBuilder = true)
 public class TeacherDto {
     private Long id;
