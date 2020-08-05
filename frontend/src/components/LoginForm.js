@@ -23,8 +23,7 @@ class LoginForm extends Component {
     this.API_BASE_URL = "http://localhost:8080/login";
   }
   redirectToHome(props) {
-    props.updateTitle("Home");
-    props.history.push("/home");
+    return <Redirect to="/professor/" />;
   }
   handleSubmitClick(e, props) {
     e.preventDefault();
@@ -32,7 +31,7 @@ class LoginForm extends Component {
       email: this.state.email,
       password: this.state.password,
       id: null,
-      name : null,
+      name: null,
     };
     axios
       .post(this.API_BASE_URL, payload)
@@ -101,11 +100,6 @@ class LoginForm extends Component {
                   >
                     Login
                   </Button>
-                </Col>
-                <Col>
-                  <a href="#" className="text-muted nounderline small">
-                    Forgot Password?
-                  </a>
                 </Col>
               </Row>
             </Container>

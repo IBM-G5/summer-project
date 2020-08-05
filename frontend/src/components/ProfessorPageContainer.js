@@ -19,15 +19,16 @@ class ProfessorPageContainer extends Component {
   }
 
   fetchData() {
-    fetch("https://randomuser.me/api/?results=5&nat=us,dk,fr,gb&page=2")
+    fetch("http://localhost:8080/getall")
       .then((response) => response.json())
       .then((parsedJSON) =>
-        parsedJSON.results.map((exam, i) => ({
-          name: `${exam.name.last}`,
-          username: `${exam.login.username}`,
-          email: `${exam.email}`,
-          location: `${exam.location.city}`,
+        parsedJSON.map((examen, i) => ({
+          classroom: `${examen.classroom}`,
+          date: `${examen.date}`,
+          examInfo: `${examen.exam}`,
+          id: `${examen.id}`,
           index: i,
+          numberOfSeats: `${examen.numberOfSeats}`
         }))
       )
       .then((exams) =>
@@ -59,19 +60,18 @@ class ProfessorPageContainer extends Component {
           </thead>
           <tbody>
             {!isLoading && this.state.exams.length > 0 ? (
-              this.state.exams.map((exam) => {
-                const { username, name, email, location, index } = exam;
-                console.log({ username, index });
+              this.state.exams.map((examen) => {
+                const { classroom, date, examInfo, id, index, numberOfSeats } = examen;
                 return (
                   <tr key={index}>
-                    <td key={name}>{name}</td>
-                    <td key={location}>{location}</td>
-                    <td key={username}>
+                    <td key={classroom}>{classroom}</td>
+                    <td key={date}>{date}</td>
+                    <td key={id}>
                       <Button variant="danger" key={("bt1", username)}>
                         Delete
                       </Button>
                     </td>
-                    <th key={email}>
+                    <th key={index}>
                       <Button variant="secondary" key={("bt2", username)}>
                         Update
                       </Button>

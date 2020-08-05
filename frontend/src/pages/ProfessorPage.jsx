@@ -1,4 +1,4 @@
-import React,{Component} from "react"
+import React from "react"
 import ProfessorPageContainer from '../components/ProfessorPageContainer'
 import Navi from '../components/Navi'
 
