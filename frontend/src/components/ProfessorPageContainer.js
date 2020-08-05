@@ -28,7 +28,9 @@ class ProfessorPageContainer extends Component {
           examInfo: `${examen.exam}`,
           id: `${examen.id}`,
           index: i,
-          numberOfSeats: `${examen.numberOfSeats}`
+          numberOfSeats: `${examen.numberOfSeats}`,
+          teacher: `${examen.exam.teacher}`,
+          course: `${examen.exam.course}`
         }))
       )
       .then((exams) =>
@@ -54,6 +56,9 @@ class ProfessorPageContainer extends Component {
             <tr>
               <th>Course</th>
               <th>Teacher</th>
+              <th>Date</th>
+              <th>Classroom</th>
+              <th>No. of seats</th>
               <th>Delete</th>
               <th>Update</th>
             </tr>
@@ -61,11 +66,14 @@ class ProfessorPageContainer extends Component {
           <tbody>
             {!isLoading && this.state.exams.length > 0 ? (
               this.state.exams.map((examen) => {
-                const { classroom, date, examInfo, id, index, numberOfSeats } = examen;
+                const { classroom, date, examInfo, id, index, numberOfSeats, teacher, course } = examen;
                 return (
                   <tr key={index}>
+                    <td key={course}>{course}</td>
+                    <td key={teacher}>{teacher}</td>
+                    <td key={date}>{new Date(date).toString()}</td>
                     <td key={classroom}>{classroom}</td>
-                    <td key={date}>{date}</td>
+                    <td key={id, numberOfSeats}>{numberOfSeats}</td>
                     <td key={id}>
                       <Button variant="danger" key={("bt1", classroom)}>
                         Delete
