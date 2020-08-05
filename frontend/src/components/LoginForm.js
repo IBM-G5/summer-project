@@ -8,6 +8,8 @@ import Col from "react-bootstrap/Col";
 import loginSmallSvg from "../img/undraw_safe_bnk7.svg";
 import logoTransparent from "../img/logo_transparent.png";
 
+import { Redirect } from "react-router-dom"
+
 import axios from "axios";
 class LoginForm extends Component {
   constructor(props) {

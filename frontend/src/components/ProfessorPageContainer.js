@@ -67,12 +67,12 @@ class ProfessorPageContainer extends Component {
                     <td key={classroom}>{classroom}</td>
                     <td key={date}>{date}</td>
                     <td key={id}>
-                      <Button variant="danger" key={("bt1", username)}>
+                      <Button variant="danger" key={("bt1", classroom)}>
                         Delete
                       </Button>
                     </td>
                     <th key={index}>
-                      <Button variant="secondary" key={("bt2", username)}>
+                      <Button variant="secondary" key={("bt2", classroom)}>
                         Update
                       </Button>
                     </th>
