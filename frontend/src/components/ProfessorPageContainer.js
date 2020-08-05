@@ -89,8 +89,8 @@ class ProfessorPageContainer extends Component {
               })
             ) : (
               <tr>
-                <td colSpan="4">
-                  <h5>Nothing to be desplayed.</h5>
+                <td colSpan="7">
+                  <h5>No exams to be displayed.</h5>
                 </td>
               </tr>
             )}
