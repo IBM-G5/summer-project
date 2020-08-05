@@ -37,15 +37,16 @@ class LoginForm extends Component {
     };
     axios
       .post(this.API_BASE_URL, payload)
-      .then(function (response) {
-        if (response.data.code === 200) {
-          this.setState((prevState) => ({
-            ...prevState,
+      .then( (response) => {
+        console.log(response);
+        if (response.status === 200) {
+          this.setState( {
+            ...this.state,
             successMessage: "Login successful. Redirecting to home page..",
-          }));
+          });
           this.redirectToHome();
-          props.showError(null);
-        } else if (response.data.code === 204) {
+          // props.showError(null);
+        } else if (response.status === 204) {
           props.showError("Username and password do not match");
         } else {
           props.showError("Username does not exists");
