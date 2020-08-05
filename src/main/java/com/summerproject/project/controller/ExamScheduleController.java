@@ -22,7 +22,7 @@ public class ExamScheduleController {
         return examScheduleService.addExamSchedule(examScheduleDto);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{id}")
     List<ExamScheduleDto> removeExamSchedule (@PathVariable Long id) throws Exception {
         return examScheduleService.deleteExamSchedule(id);
     }
