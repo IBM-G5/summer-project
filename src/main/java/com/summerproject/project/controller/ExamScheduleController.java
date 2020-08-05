@@ -27,6 +27,24 @@ public class ExamScheduleController {
         return examScheduleService.deleteExamSchedule(id);
     }
 
+    @GetMapping("/getall")
+    public ResponseEntity<List<ExamScheduleDto>> getAllExamSchedules() {
+        List<ExamScheduleDto> listExamScheduleDto = examScheduleService.getAllExamSchedules();
+        if (listExamScheduleDto.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(listExamScheduleDto, HttpStatus.OK);
+        }
+    }
 
+    @PutMapping(value = "/update/{examId}")
+    public ResponseEntity<ExamScheduleDto> updateExamSchedule(@PathVariable Long examId, @RequestBody ExamScheduleDto examSchedule) throws Exception {
+        ExamScheduleDto examScheduleDto = examScheduleService.updateExamSchedule(examId, examSchedule);
+        if(examScheduleDto == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(examScheduleDto, HttpStatus.OK);
+        }
+    }
 
 }
