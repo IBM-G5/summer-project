@@ -1,6 +1,7 @@
 package com.summerproject.project.controller;
 
 import com.summerproject.project.dto.ExamScheduleDto;
+import com.summerproject.project.entity.Faculty;
 import com.summerproject.project.mapper.ExamScheduleDtoEntityMapper;
 import com.summerproject.project.service.ExamScheduleService;
 import lombok.RequiredArgsConstructor;
@@ -47,4 +48,13 @@ public class ExamScheduleController {
         }
     }
 
+    @GetMapping(value = "/filterByFaculty/{faculty}")
+    public ResponseEntity<List<ExamScheduleDto>> filterByFaculty(@PathVariable String faculty){
+        List<ExamScheduleDto> listExamScheduleDto = examScheduleService.getAllExamSchedulesFilterByFaculty(faculty);
+        if (listExamScheduleDto.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(listExamScheduleDto, HttpStatus.OK);
+        }
+    }
 }
