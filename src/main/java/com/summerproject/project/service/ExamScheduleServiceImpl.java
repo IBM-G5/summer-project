@@ -75,5 +75,12 @@ public class ExamScheduleServiceImpl implements ExamScheduleService{
         return examScheduleRepository.filterByYearOfStudy(yearOfStudy).stream().map(examScheduleDtoEntityMapper::from).collect(Collectors.toList());
     }
 
+    @Override
+    public List<ExamScheduleDto> getAllExamSchedulesFilterByYearOfStudyAndFaculty(int yearOfStudy, String faculty) {
+        logger.info(" Exams filtered by yearOfStudy  = " +  yearOfStudy + " and faculty = " + faculty);
+        return examScheduleRepository.filterByYearOfStudyAndFaculty(yearOfStudy, faculty).stream().map(examScheduleDtoEntityMapper::from).collect(Collectors.toList());
+    }
+
+
 
 }

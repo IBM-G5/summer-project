@@ -67,4 +67,16 @@ public class ExamScheduleController {
             return new ResponseEntity<>(listExamScheduleDto, HttpStatus.OK);
         }
     }
+
+    @GetMapping(value = "/filterByYearOfStudyAndFaculty/{yearOfStudy}&{faculty}")
+    public ResponseEntity<List<ExamScheduleDto>> filterByYearOfStudyAndFaculty(@PathVariable ("yearOfStudy") int yearOfStudy, @PathVariable("faculty") String faculty){
+        List<ExamScheduleDto> listExamScheduleDto = examScheduleService.getAllExamSchedulesFilterByYearOfStudyAndFaculty(yearOfStudy, faculty);
+        if (listExamScheduleDto.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(listExamScheduleDto, HttpStatus.OK);
+        }
+    }
+
+
 }

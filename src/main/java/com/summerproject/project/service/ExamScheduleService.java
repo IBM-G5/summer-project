@@ -12,5 +12,5 @@ public interface ExamScheduleService {
     List<ExamScheduleDto> getAllExamSchedules();
     List<ExamScheduleDto> getAllExamSchedulesFilterByFaculty(String faculty);
     List<ExamScheduleDto> getAllExamSchedulesFilterByYearOfStudy(int yearOfStudy);
-
+    List<ExamScheduleDto> getAllExamSchedulesFilterByYearOfStudyAndFaculty(int yearOfStudy, String faculty);
 }
