@@ -15,4 +15,8 @@ public class CourseDto {
     private Long id;
 
     private String name;
+
+    private int yearOfStudy;
+
+    private int semester;
 }
