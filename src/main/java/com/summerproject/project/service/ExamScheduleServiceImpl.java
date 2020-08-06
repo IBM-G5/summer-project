@@ -65,8 +65,14 @@ public class ExamScheduleServiceImpl implements ExamScheduleService{
 
     @Override
     public List<ExamScheduleDto> getAllExamSchedulesFilterByFaculty(String faculty) {
-        logger.info(" Exams filtered by Faculty! = " + faculty.toString());
+        logger.info(" Exams filtered by Faculty = " + faculty.toString());
         return examScheduleRepository.filterByFaculty(faculty).stream().map(examScheduleDtoEntityMapper::from).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ExamScheduleDto> getAllExamSchedulesFilterByYearOfStudy(int yearOfStudy) {
+        logger.info(" Exams filtered by yearOfStudy = " +  yearOfStudy);
+        return examScheduleRepository.filterByYearOfStudy(yearOfStudy).stream().map(examScheduleDtoEntityMapper::from).collect(Collectors.toList());
     }
 
 

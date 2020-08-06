@@ -11,4 +11,6 @@ public interface ExamScheduleService {
     ExamScheduleDto updateExamSchedule(Long examId, ExamScheduleDto examSchedule) throws Exception;
     List<ExamScheduleDto> getAllExamSchedules();
     List<ExamScheduleDto> getAllExamSchedulesFilterByFaculty(String faculty);
+    List<ExamScheduleDto> getAllExamSchedulesFilterByYearOfStudy(int yearOfStudy);
+
 }

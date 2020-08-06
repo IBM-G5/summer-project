@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ExamScheduleRepository extends JpaRepository<ExamSchedule, Long> {
     @Query(value = "SELECT *\n" +
@@ -19,4 +20,7 @@ public interface ExamScheduleRepository extends JpaRepository<ExamSchedule, Long
             "        FROM faculty\n" +
             "        WHERE faculty.name = :faculty))", nativeQuery = true)
     List<ExamSchedule> filterByFaculty(@Param("faculty") String faculty);
+
+    @Query("SELECT es FROM ExamSchedule es JOIN Exam e ON es.exam=e JOIN Course c ON e.course=c WHERE c.yearOfStudy=:yearOfStudy")
+    List<ExamSchedule> filterByYearOfStudy(@Param("yearOfStudy") int yearOfStudy);
 }
