@@ -15,7 +15,9 @@ class ProfessorPageContainer extends Component {
         this.state = {
             isLoading: true,
             exams: [],
-            show: false
+            show: false,
+            deleteExamModalShow: false,
+            examToBeDeleted: -1
         };
     }
 
@@ -51,6 +53,37 @@ class ProfessorPageContainer extends Component {
         this.setState({
             show: !this.state.show
         })
+    }
+
+    DeleteExamHandler(id)
+    {
+        this.setState({
+            deleteExamModalShow: !this.state.deleteExamModalShow,
+            examToBeDeleted: id
+        })
+    }
+
+    DeleteExam(id)
+    {
+        fetch('http://localhost:8080/delete/'+this.state.examToBeDeleted)
+        .then((response) => response.json())
+            .then((parsedJSON) =>
+                parsedJSON.map((examen, i) => ({
+                    classroom: `${examen.classroom}`,
+                    date: `${examen.date}`,
+                    examInfo: `${examen}`,
+                    id: `${examen.id}`,
+                    index: i,
+                    numberOfSeats: `${examen.numberOfSeats}`,
+                    teacher: `${examen.exam.teacher.name}`,
+                    course: `${examen.exam.course.name}`
+                }))
+            )
+            .then((exams) =>
+                this.setState({
+                    exams,
+                    deleteExamModalShow: !this.state.deleteExamModalShow
+                }))
     }
 
     render() {
@@ -97,6 +130,17 @@ class ProfessorPageContainer extends Component {
                         <Modal.Footer/>
                     </Modal>
 
+                    <Modal show={this.state.deleteExamModalShow} onHide={()=>this.DeleteExamHandler()}>
+                        <Modal.Header closeButton ><h5>Delete Exam</h5></Modal.Header>
+                        <Modal.Body>
+                            <h6>Are you sure you want to delete this exam schedule?</h6>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="danger" onClick={()=>this.DeleteExam()}>Delete</Button>
+                            <Button onClick={()=> this.setState({deleteExamModalShow: !this.state.deleteExamModalShow})}>Cancel</Button>
+                        </Modal.Footer>
+                    </Modal>
+
                     <Dropdown as={ButtonGroup}>
                         <Dropdown.Toggle> Faculty </Dropdown.Toggle>
                         <Dropdown.Menu>
@@ -121,7 +165,7 @@ class ProfessorPageContainer extends Component {
 
                 </div>
 
-                <Table striped bordered hover>
+                <Table striped bordered hover className="mt-3">
                     <thead>
                     <tr>
                         <th>Course</th>
@@ -144,13 +188,13 @@ class ProfessorPageContainer extends Component {
                                     <td key={date}>{new Date(date).toString()}</td>
                                     <td key={classroom}>{classroom}</td>
                                     <td key={id, numberOfSeats}>{numberOfSeats}</td>
-                                    <td key={id}>
-                                        <Button variant="danger" key={("bt1", classroom)}>
+                                    <td>
+                                        <Button onClick={()=>this.DeleteExamHandler()} variant="danger">
                                             Delete
-                                        </Button>
+                                        </Button>{' '}
                                     </td>
-                                    <th key={index}>
-                                        <Button variant="secondary" key={("bt2", classroom)}>
+                                    <th>
+                                        <Button variant="secondary">
                                             Update
                                         </Button>
                                     </th>
