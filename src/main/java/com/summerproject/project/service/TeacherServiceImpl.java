@@ -31,11 +31,8 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     public boolean addTeacher(TeacherDto teacherDto) {
         logger.info("trying to validate teacher = " + teacherDto.toString());
-        List<TeacherDto> teachers = teacherRepository.findAll().stream().map(teacherDtoEntityMapper::from).collect(Collectors.toList());
-        for (TeacherDto teacher: teachers) {
-            if(teacher.getEmail().equals(teacherDto.getEmail())){
-                return false;
-            }
+        if(teacherRepository.existsTeacherByEmail(teacherDto.getEmail())){
+            return false;
         }
         EmailValidator emailValidator = new EmailValidator();
         if(emailValidator.validate(teacherDto.getEmail())){
