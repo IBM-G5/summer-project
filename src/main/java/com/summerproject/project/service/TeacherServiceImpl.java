@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class TeacherServiceImpl implements TeacherService{
 
@@ -28,6 +31,12 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     public boolean addTeacher(TeacherDto teacherDto) {
         logger.info("trying to validate teacher = " + teacherDto.toString());
+        List<TeacherDto> teachers = teacherRepository.findAll().stream().map(teacherDtoEntityMapper::from).collect(Collectors.toList());
+        for (TeacherDto teacher: teachers) {
+            if(teacher.getEmail().equals(teacherDto.getEmail())){
+                return false;
+            }
+        }
         EmailValidator emailValidator = new EmailValidator();
         if(emailValidator.validate(teacherDto.getEmail())){
             teacherDtoEntityMapper.from(teacherRepository.save(teacherDtoEntityMapper.from(teacherDto)));
