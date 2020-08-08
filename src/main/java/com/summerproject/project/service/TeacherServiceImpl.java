@@ -31,6 +31,9 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     public boolean addTeacher(TeacherDto teacherDto) {
         logger.info("trying to validate teacher = " + teacherDto.toString());
+        if(teacherDto.getEmail().equals("") || teacherDto.getName().equals("") || teacherDto.getPassword().equals("")){
+            return false;
+        }
         if(teacherRepository.existsTeacherByEmail(teacherDto.getEmail())){
             return false;
         }
