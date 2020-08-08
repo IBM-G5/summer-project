@@ -18,8 +18,12 @@ public class LoginController {
     @RequestMapping(method = RequestMethod.POST, value = "/signup")
 
     //Modified
-    public void addTeacher(@RequestBody TeacherDto teacherDto){
-       // teacherService.addTeacher(teacher);
+    public ResponseEntity<String> addTeacher(@RequestBody TeacherDto teacherDto){
+       boolean result = teacherService.addTeacher(teacherDto);
+        if (result) {
+            return new ResponseEntity<String>("Your account was registered!",HttpStatus.OK);
+        }
+        else  return new ResponseEntity<String>("Something went wrong with the registration!",HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
@@ -27,7 +31,7 @@ public class LoginController {
     //Modified
     public ResponseEntity<String> findTeacherForLogin(@RequestBody TeacherDto teacherDto){
         boolean result;
-        result= teacherService.checkLogin(teacherDto.getEmail(), teacherDto.getPassword());
+        result = teacherService.checkLogin(teacherDto.getEmail(), teacherDto.getPassword());
         if (result) {
             return new ResponseEntity<String>("Autentification succesfull",HttpStatus.OK);
         }

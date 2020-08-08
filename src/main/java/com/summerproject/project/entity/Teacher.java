@@ -21,13 +21,13 @@ public class Teacher {
 
     @Column
     @NotNull
-    public String name;
+    private String name;
 
     @Column
     @Email
-    public String email;
+    private String email;
 
     @Column
     @NotNull
-    public String password;
+    private String password;
 }
