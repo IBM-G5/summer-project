@@ -11,6 +11,7 @@ import javax.validation.constraints.Min;
 @Getter
 @Setter
 @ToString
+@Builder
 @Entity
 public class Exam {
 

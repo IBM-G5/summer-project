@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @ToString
+@Builder
 @Entity
 public class Faculty {
 
