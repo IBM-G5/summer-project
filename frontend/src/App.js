@@ -5,16 +5,16 @@ import GuestPage from './pages/GuestPage'
 import LoginPage from './pages/LoginPage'
 import ProfessorPage from './pages/ProfessorPage'
 
-import {BrowserRouter as Router, Route, Switch, Link, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 function App() {
   return (
     <div>
       <Router>
       <Switch>
-        <Route exact path="/" component ={LoginPage}></Route>
-        <Route exact path="/guest" component ={GuestPage}></Route>
-        <Route exact path="/professor" component={ProfessorPage}></Route>
+        <Route exact path="/" component ={LoginPage}/>
+        <Route exact path="/guest" component ={GuestPage}/>
+        <Route exact path="/professor" component={ProfessorPage}/>
       </Switch>
       </Router>
     </div>

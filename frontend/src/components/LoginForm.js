@@ -8,7 +8,7 @@ import Col from "react-bootstrap/Col";
 import loginSmallSvg from "../img/undraw_safe_bnk7.svg";
 import logoTransparent from "../img/logo_transparent.png";
 
-import { Redirect } from "react-router-dom"
+import {Redirect, withRouter} from "react-router-dom"
 
 import axios from "axios";
 class LoginForm extends Component {
@@ -25,6 +25,7 @@ class LoginForm extends Component {
     this.API_BASE_URL = "http://localhost:8080/login";
   }
   redirectToHome(props) {
+    console.log("intra");
     return <Redirect to="/professor/" />;
   }
   handleSubmitClick(e, props) {
@@ -44,7 +45,8 @@ class LoginForm extends Component {
             ...this.state,
             successMessage: "Login successful. Redirecting to home page..",
           });
-          this.redirectToHome();
+          // this.redirectToHome();
+          this.props.history.push('/professor');
           // props.showError(null);
         } else if (response.status === 204) {
           props.showError("Username and password do not match");
@@ -71,7 +73,7 @@ class LoginForm extends Component {
           Login
         </p>
         <Container className="mt-5">
-          <img src={loginSmallSvg} width="55%" alt="login illustration"></img>
+          <img src={loginSmallSvg} width="55%" alt="login illustration"/>
           <Form className="mt-5">
             <Form.Group controlId="formBasicEmail">
               <Form.Control
@@ -117,4 +119,4 @@ class LoginForm extends Component {
     );
   }
 }
-export default LoginForm;
+export default withRouter(LoginForm);
