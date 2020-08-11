@@ -222,6 +222,7 @@ class ProfessorPageContainer extends Component {
                     )}
                     </tbody>
                 </Table>
+            <Button variant="warning">Export Excel</Button>
             </Container>
         );
     }

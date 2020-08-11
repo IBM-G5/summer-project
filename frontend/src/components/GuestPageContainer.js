@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
 import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
 
 import logoTransparent from "../img/logo_transparent.png";
 
@@ -25,7 +24,6 @@ class GuestPageContainer extends Component {
         parsedJSON.map((examen, i) => ({
           classroom: `${examen.classroom}`,
           date: `${examen.date}`,
-          examInfo: `${examen}`,
           id: `${examen.id}`,
           index: i,
           numberOfSeats: `${examen.numberOfSeats}`,
@@ -60,8 +58,6 @@ class GuestPageContainer extends Component {
               <th>Date</th>
               <th>Classroom</th>
               <th>No. of seats</th>
-              <th>Delete</th>
-              <th>Update</th>
             </tr>
           </thead>
           <tbody>
@@ -70,7 +66,6 @@ class GuestPageContainer extends Component {
                 const {
                   classroom,
                   date,
-                  examInfo,
                   id,
                   index,
                   numberOfSeats,
@@ -81,26 +76,15 @@ class GuestPageContainer extends Component {
                   <tr key={index}>
                     <td key={course}>{course}</td>
                     <td key={teacher}>{teacher}</td>
-                    <td key={date}>{new Date(date).toString()}</td>
+                    <td key={date}>{new Date(date * 1).toLocaleDateString()}</td>
                     <td key={classroom}>{classroom}</td>
                     <td key={(id, numberOfSeats)}>{numberOfSeats}</td>
-                    <td>
-                      <Button
-                        onClick={() => this.DeleteExamHandler()}
-                        variant="danger"
-                      >
-                        Delete
-                      </Button>{" "}
-                    </td>
-                    <th>
-                      <Button variant="secondary">Update</Button>
-                    </th>
                   </tr>
                 );
               })
             ) : (
               <tr>
-                <td colSpan="7">
+                <td colSpan="5">
                   <h5>No exams to be displayed.</h5>
                 </td>
               </tr>
