@@ -1,10 +1,16 @@
 package com.summerproject.project.service;
 
+import com.summerproject.project.dto.CourseDto;
 import com.summerproject.project.dto.ExamScheduleDto;
+import com.summerproject.project.dto.FacultyDto;
+import com.summerproject.project.dto.TeacherDto;
 import com.summerproject.project.entity.Exam;
 import com.summerproject.project.entity.ExamSchedule;
 import com.summerproject.project.entity.Faculty;
+import com.summerproject.project.mapper.CourseDtoEntityMapper;
 import com.summerproject.project.mapper.ExamScheduleDtoEntityMapper;
+import com.summerproject.project.mapper.FacultyDtoEntityMapper;
+import com.summerproject.project.mapper.TeacherDtoEntityMapper;
 import com.summerproject.project.repository.ExamRepository;
 import com.summerproject.project.repository.ExamScheduleRepository;
 import org.slf4j.Logger;
@@ -20,7 +26,7 @@ import java.util.stream.Collectors;
 public class ExamScheduleServiceImpl implements ExamScheduleService{
 
     @Autowired
-    ExamRepository examRepository;
+    ExamService examService;
 
     @Autowired
     ExamScheduleRepository examScheduleRepository;
@@ -28,14 +34,24 @@ public class ExamScheduleServiceImpl implements ExamScheduleService{
     @Autowired
     ExamScheduleDtoEntityMapper examScheduleDtoEntityMapper;
 
+    @Autowired
+    CourseDtoEntityMapper courseDtoEntityMapper;
+
+    @Autowired
+    TeacherDtoEntityMapper teacherDtoEntityMapper;
+
+    @Autowired
+    FacultyDtoEntityMapper facultyDtoEntityMapper;
+
+
     private static final Logger logger = LoggerFactory.getLogger(ExamScheduleServiceImpl.class);
 
     @Override
     public ExamScheduleDto addExamSchedule(ExamScheduleDto examSchedule) {
         logger.info(examSchedule.toString() + " added");
-       // Exam exam = examRepository.save(examScheduleDtoEntityMapper.from(examSchedule).getExam());
-        //examSchedule.setExam(exam);
-       return examScheduleDtoEntityMapper.from(examScheduleRepository.save(examScheduleDtoEntityMapper.from(examSchedule)));
+        Exam exam = examService.addExam(examSchedule.getExam());
+        examSchedule.setExam(exam);
+        return examScheduleDtoEntityMapper.from(examScheduleRepository.save(examScheduleDtoEntityMapper.from(examSchedule)));
     }
 
     @Override
@@ -87,6 +103,25 @@ public class ExamScheduleServiceImpl implements ExamScheduleService{
         return examScheduleRepository.filterByYearOfStudyAndFaculty(yearOfStudy, faculty).stream().map(examScheduleDtoEntityMapper::from).collect(Collectors.toList());
     }
 
+    @Override
+    public List<CourseDto> getAllCourses() {
+        logger.info(" All courses returned.");
+        return examService.getCourses().stream().map(courseDtoEntityMapper::from).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TeacherDto> getAllTeachers() {
+        logger.info(" All teachers returned.");
+        return examService.getTeachers().stream().map(teacherDtoEntityMapper::from).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<FacultyDto> getAllFaculties() {
+        logger.info(" All faculties returned.");
+        return examService.getFaculties().stream().map(facultyDtoEntityMapper::from).collect(Collectors.toList());
+
+    }
 
 
 }
