@@ -24,12 +24,12 @@ public class Exam {
     @Max(2020)
     private int academicYear;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.ALL)
     private Faculty faculty;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.ALL)
     private Course course;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.ALL)
     private Teacher teacher;
 }
