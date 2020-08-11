@@ -37,7 +37,6 @@ class ProfessorPageContainer extends Component {
                 parsedJSON.map((examen, i) => ({
                     classroom: `${examen.classroom}`,
                     date: `${examen.date}`,
-                    examInfo: `${examen}`,
                     id: `${examen.id}`,
                     index: i,
                     numberOfSeats: `${examen.numberOfSeats}`,
@@ -191,7 +190,7 @@ class ProfessorPageContainer extends Component {
                     <tbody>
                     {!isLoading && this.state.exams.length > 0 ? (
                         this.state.exams.map((examen) => {
-                            const {classroom, date, examInfo, id, index, numberOfSeats, teacher, course} = examen;
+                            const {classroom, date, id, index, numberOfSeats, teacher, course} = examen;
                             return (
                                 <tr key={index}>
                                     <td key={id}>{id}</td>
