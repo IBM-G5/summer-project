@@ -35,6 +35,7 @@ public class ExamScheduleController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=exam-schedules.xlsx");
+        headers.add("Content-Type","application/vnd.ms-excel");
 
         return ResponseEntity
                 .ok()
