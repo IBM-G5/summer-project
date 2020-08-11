@@ -197,7 +197,7 @@ class ProfessorPageContainer extends Component {
                                     <td key={id}>{id}</td>
                                     <td key={course}>{course}</td>
                                     <td key={teacher}>{teacher}</td>
-                                    <td key={date}>{new Date(date).toString()}</td>
+                                    <td key={date}>{new Date(date * 1).toLocaleDateString()}</td>
                                     <td key={classroom}>{classroom}</td>
                                     <td key={numberOfSeats}>{numberOfSeats}</td>
                                     <td>
