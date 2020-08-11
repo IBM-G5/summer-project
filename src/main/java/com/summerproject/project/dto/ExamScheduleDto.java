@@ -2,16 +2,15 @@ package com.summerproject.project.dto;
 
 
 import com.summerproject.project.entity.Exam;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
-import lombok.Value;
+import lombok.*;
 
 import java.util.Date;
 
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
-@Value
+@Setter
+//@Value
 @ToString
 @Builder(toBuilder = true)
 public class ExamScheduleDto {
