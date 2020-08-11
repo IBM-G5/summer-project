@@ -2,7 +2,6 @@ package com.summerproject.project.controller;
 
 import com.summerproject.project.dto.ExamScheduleDto;
 import com.summerproject.project.entity.Faculty;
-import com.summerproject.project.excel.ExcelGenerator;
 import com.summerproject.project.mapper.ExamScheduleDtoEntityMapper;
 import com.summerproject.project.service.ExamScheduleService;
 import lombok.RequiredArgsConstructor;
@@ -22,21 +21,6 @@ public class ExamScheduleController {
 
     @Autowired
     ExamScheduleService examScheduleService;
-
-    @GetMapping("/download/exam-schedules.xlsx")
-    public ResponseEntity<InputStreamResource> excelExamSchedulesReport() throws IOException {
-        List<ExamScheduleDto> examScheduleDtos = examScheduleService.getAllExamSchedules();
-
-        ByteArrayInputStream inputStream = ExcelGenerator.examSchedulesToExcel(examScheduleDtos);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=exam-schedules.xlsx");
-
-        return ResponseEntity
-                .ok()
-                .headers(headers)
-                .body(new InputStreamResource(inputStream));
-    }
 
     @PostMapping("/create")
     ExamScheduleDto createExamSchedule(@RequestBody ExamScheduleDto examScheduleDto) {
