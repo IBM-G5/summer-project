@@ -82,8 +82,11 @@ class ExamScheduleServiceImplTest {
 
         final ExamSchedule examSchedule = examScheduleDtoEntityMapper.from(examScheduleDto);
 
-        Mockito.when(examScheduleRepository.findById(examScheduleDto.getId()))
-                .thenReturn(java.util.Optional.ofNullable(examSchedule));
+//        Mockito.when(examScheduleRepository.findById(examScheduleDto.getId()))
+//                .thenReturn(java.util.Optional.ofNullable(examSchedule));
+
+        Mockito.when(examScheduleService.addExamSchedule(examScheduleDto))
+                .thenReturn(examScheduleDto);
 
     }
 
