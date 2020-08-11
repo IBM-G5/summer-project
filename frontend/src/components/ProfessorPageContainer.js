@@ -14,11 +14,15 @@ class ProfessorPageContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            add: true,
+            update: true,
             isLoading: true,
             exams: [],
-            show: false,
+            addExamModalShow: false,
+            updateExamModalShow: false,
             deleteExamModalShow: false,
-            examToBeDeleted: -1
+            examToBeDeleted: -1,
+            examToBeUpdated: -1
         };
     }
 
@@ -52,10 +56,17 @@ class ProfessorPageContainer extends Component {
     AddExamHandler()
     {
         this.setState({
-            show: !this.state.show
+            addExamModalShow: !this.state.addExamModalShow
         })
     }
 
+    UpdateExamHandler(id)
+    {
+        this.setState({
+            updateExamModalShow: !this.state.updateExamModalShow,
+            examToBeUpdated: id
+        })
+    }
     DeleteExamHandler(id)
     {
         this.setState({
@@ -113,10 +124,18 @@ class ProfessorPageContainer extends Component {
                         Add Exam Schedule
                     </Button>{' '}
 
-                    <Modal show={this.state.show} onHide={()=>this.AddExamHandler()}>
+                    <Modal show={this.state.addExamModalShow} onHide={()=>this.AddExamHandler()}>
                         <Modal.Header closeButton ><h5>Add Exam</h5></Modal.Header>
                         <Modal.Body>
-                            <ExamForm></ExamForm>
+                            <ExamForm add={this.state.add}></ExamForm>
+                        </Modal.Body>
+                        <Modal.Footer/>
+                    </Modal>
+
+                    <Modal show={this.state.updateExamModalShow} onHide={()=>this.UpdateExamHandler()}>
+                        <Modal.Header closeButton ><h5>Update Exam</h5></Modal.Header>
+                        <Modal.Body>
+                            <ExamForm examToBeUpdated={this.state.examToBeUpdated} update={this.state.update} ></ExamForm>
                         </Modal.Body>
                         <Modal.Footer/>
                     </Modal>
@@ -187,7 +206,7 @@ class ProfessorPageContainer extends Component {
                                         </Button>{' '}
                                     </td>
                                     <th>
-                                        <Button variant="secondary">
+                                        <Button onClick={()=>this.UpdateExamHandler(id)} variant="secondary">
                                             Update
                                         </Button>
                                     </th>

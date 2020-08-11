@@ -14,8 +14,6 @@ class ExamForm extends Component {
             c_name_state: null,
             c_semester_state: null,
             c_yearOfStudy_state: null,
-            // yearOfStudy_state: null,
-            // semester_state: 2,
             t_id_state: null,
             t_name_state: null,
             email_state: "pisi@prof.com",
@@ -26,50 +24,145 @@ class ExamForm extends Component {
         }
     };
 
+    componentDidMount()
+    {
+        {this.updateHandler()}
+    }
+
     saveHandler=()=>{
 
-        fetch("http://localhost:8080/create",{
-            method: 'POST',
-            body:JSON.stringify({
-                id: `${this.state.id_state}`,
-                exam:{
-                    id: `${this.state.e_id_state}`,
-                    academicYear: `${this.state.academicYear_state}`,
-                    faculty:{
-                        id: `${this.state.f_id_state}`,
-                        name: `${this.state.f_name_state}`
+        if(this.props.add) {
+
+            fetch("http://localhost:8080/create", {
+                method: 'POST',
+                body: JSON.stringify({
+                    id: `${this.state.id_state}`,
+                    exam: {
+                        id: `${this.state.e_id_state}`,
+                        academicYear: `${this.state.academicYear_state}`,
+                        faculty: {
+                            id: `${this.state.f_id_state}`,
+                            name: `${this.state.f_name_state}`
+                        },
+                        course: {
+                            id: `${this.state.c_id_state}`,
+                            name: `${this.state.c_name_state}`,
+                            semester: `${this.state.c_semester_state}`,
+                            yearOfStudy: `${this.state.c_yearOfStudy_state}`
+                        },
+                        teacher: {
+                            id: `${this.state.t_id_state}`,
+                            name: `${this.state.t_name_state}`,
+                            email: `${this.state.email_state}`,
+                            password: `${this.state.password_state}`
+                        },
                     },
-                    course:{
-                        id:`${this.state.c_id_state}`,
-                        name: `${this.state.c_name_state}`,
-                        semester: `${this.state.c_semester_state}`,
-                        yearOfStudy: `${this.state.c_yearOfStudy_state}`
-                    },
-                    teacher:{
-                        id:`${this.state.t_id_state}`,
-                        name:`${this.state.t_name_state}`,
-                        email:`${this.state.email_state}`,
-                        password:`${this.state.password_state}`
-                    },
-                },
-                numberOfSeats:`${this.state.numberOfSeats_state}`,
-                date: `${this.state.date_state}`,
-                classroom: `${this.state.classroom_state}`
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                alert('The exam schedule was saved!')
+                    numberOfSeats: `${this.state.numberOfSeats_state}`,
+                    date: `${this.state.date_state}`,
+                    classroom: `${this.state.classroom_state}`
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    };
-    handlerFacultyChange = (item) => {
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('The exam schedule was saved!')
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+        else if(this.props.update){
+
+            fetch("http://localhost:8080/update/" + this.props.examToBeUpdated, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    id: `${this.state.id_state}`,
+                    exam: {
+                        id: `${this.state.e_id_state}`,
+                        academicYear: `${this.state.academicYear_state}`,
+                        faculty: {
+                            id: `${this.state.f_id_state}`,
+                            name: `${this.state.f_name_state}`
+                        },
+                        course: {
+                            id: `${this.state.c_id_state}`,
+                            name: `${this.state.c_name_state}`,
+                            semester: `${this.state.c_semester_state}`,
+                            yearOfStudy: `${this.state.c_yearOfStudy_state}`
+                        },
+                        teacher: {
+                            id: `${this.state.t_id_state}`,
+                            name: `${this.state.t_name_state}`,
+                            email: `${this.state.email_state}`,
+                            password: `${this.state.password_state}`
+                        },
+                    },
+                    numberOfSeats: `${this.state.numberOfSeats_state}`,
+                    date: `${this.state.date_state}`,
+                    classroom: `${this.state.classroom_state}`
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('The exam schedule was updated!');
+                    window.location.reload();
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+    }
+
+    updateHandler=()=>
+    {
+        if(this.props.update){
+
+            fetch('http://localhost:8080/getall')
+                .then((response) => response.json())
+                .then((parsedJSON) => {
+                        parsedJSON.filter(examfilter =>parseInt(examfilter.id,10)===parseInt(this.props.examToBeUpdated,10)).map((e) =>
+                        {
+                            this.setState(
+                                {
+                                    academicYear_state: `${e.exam.academicYear}`,
+                                    f_name_state: `${e.exam.faculty.name}`,
+                                    c_name_state: `${e.exam.course.name}`,
+                                    c_semester_state: `${e.exam.course.semester}`,
+                                    c_yearOfStudy_state: `${e.exam.course.yearOfStudy}`,
+                                    t_name_state: `${e.exam.teacher.name}`,
+                                    numberOfSeats_state: `${e.numberOfSeats}`,
+                                    date_state: `${e.date}`,
+                                    classroom_state: `${e.classroom}`,
+                                    id_state: `${e.id}`,
+                                    e_id_state: `${e.exam.id}`,
+                                    f_id_state: `${e.exam.faculty.id}`,
+                                    c_id_state: `${e.exam.course.id}`,
+                                    t_id_state: `${e.exam.teacher.id}`,
+                                    email_state: "pisi@prof.com",
+                                    password_state: "pass",
+                                })
+                        }
+                            )
+                    }
+                )
+                .then((exams) =>
+                    this.setState({
+                        exams,
+                        isLoading: false,
+                    })
+                )
+                .catch((error) => console.log("parsing failed", error));
+        }
+
+    }
+        handlerFacultyChange = (item) => {
         this.setState({
             f_name_state:item.target.value
         })
@@ -138,7 +231,7 @@ class ExamForm extends Component {
                         <div className="col">
                             <label> Faculty</label>
                             <select className="form-control" value={this.state.f_name_state} onChange={this.handlerFacultyChange} required>
-                                <option value="" disabled selected>Select a faculty</option>
+                                <option value={this.state.f_name_state} disabled selected>{this.state.f_name_state}</option>
                                 {
                                     allFaculty.map((f) =>
                                         <option value={f}>{f}</option>
@@ -149,7 +242,7 @@ class ExamForm extends Component {
                         <div className="col">
                             <label>Teacher</label>
                             <select className="form-control" value={this.state.t_name_state} onChange={this.handlerTeacherChange} required>
-                                <option value="" disabled selected>Select a teacher</option>
+                                <option value={this.state.t_name_state} disabled selected>{this.state.t_name_state}</option>
                                 {
                                     teachers.map((t) =>
                                         <option value={t}>{t}</option>
@@ -163,7 +256,7 @@ class ExamForm extends Component {
                         <div className="col">
                             <label>Course</label>
                             <select className="form-control" value={this.state.c_name_state} onChange={this.handlerCourseChange} required>
-                                <option value="" disabled selected>Select a course</option>
+                                <option value={this.state.c_name_state}  disabled selected>{this.state.c_name_state} </option>
                                 {
                                     courses.map((c) =>
                                         <option value={c}>{c}</option>
@@ -174,7 +267,7 @@ class ExamForm extends Component {
                         <div className="col">
                             <label>Year of study</label>
                             <select className="form-control" value={this.state.c_yearOfStudy_state} onChange={this.handlerYearOfStudyChange} required>
-                                <option value="" disabled selected>Select the year of study</option>
+                                <option value={this.state.c_yearOfStudy_state} disabled selected>{this.state.c_yearOfStudy_state}</option>
                                 {
                                     [1, 2, 3, 4, 5, 6].map((y) =>
                                         <option value={y}>{y}</option>
@@ -185,7 +278,7 @@ class ExamForm extends Component {
                         <div className="col">
                             <label>Semester</label>
                             <select className="form-control" value={this.state.c_semester_state} onChange={this.handlerSemesterChange} required>
-                                <option value="" disabled selected>Select the semester</option>
+                                <option value={this.state.c_semester_state} disabled selected>{this.state.c_semester_state}</option>
                                 {
                                     [1, 2].map((y) =>
                                         <option value={y}>{y}</option>
@@ -199,7 +292,7 @@ class ExamForm extends Component {
                         <div className="col">
                             <label>Academic Year</label>
                             <select className="form-control" value={this.state.academicYear_state} onChange={this.handlerAcademicYearChange}required>
-                                <option value="" disabled selected>Select the academic year</option>
+                                <option value={this.state.academicYear_state} disabled selected>{this.state.academicYear_state}</option>
                                 {
                                     ["2017","2018","2019","2020"].map((a) =>
                                         <option value={a}>{a}</option>
@@ -210,7 +303,7 @@ class ExamForm extends Component {
                         <div className="col">
                             <label>Number of seats</label>
                             <select className="form-control" value={this.state.numberOfSeats_state} onChange={this.handlerNoOfSeatsChange}required>
-                                <option value="" disabled selected>Select the number of seats</option>
+                                <option value={this.state.numberOfSeats_state} disabled selected>{this.state.numberOfSeats_state}</option>
                                 {
                                     [300, 200, 250].map((s) =>
                                         <option value={s}>{s}</option>
@@ -221,7 +314,7 @@ class ExamForm extends Component {
                         <div className="col">
                             <label>Classroom</label>
                             <select className="form-control" value={this.state.classroom_state} onChange={this.handlerClassRoomChange}required>
-                                <option value="" disabled selected>Select a classroom</option>
+                                <option value={this.state.classroom_state}  disabled selected>{this.state.classroom_state} </option>
                                 {
                                     rooms.map((r) =>
                                         <option value={r}>{r}</option>
