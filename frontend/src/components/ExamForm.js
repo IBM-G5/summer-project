@@ -128,28 +128,28 @@ class ExamForm extends Component {
                 .then((response) => response.json())
                 .then((parsedJSON) => {
                         parsedJSON.filter(examfilter =>parseInt(examfilter.id,10)===parseInt(this.props.examToBeUpdated,10)).map((e) =>
-                        {
-                            this.setState(
-                                {
-                                    academicYear_state: `${e.exam.academicYear}`,
-                                    f_name_state: `${e.exam.faculty.name}`,
-                                    c_name_state: `${e.exam.course.name}`,
-                                    c_semester_state: `${e.exam.course.semester}`,
-                                    c_yearOfStudy_state: `${e.exam.course.yearOfStudy}`,
-                                    t_name_state: `${e.exam.teacher.name}`,
-                                    numberOfSeats_state: `${e.numberOfSeats}`,
-                                    date_state: `${e.date}`,
-                                    classroom_state: `${e.classroom}`,
-                                    id_state: `${e.id}`,
-                                    e_id_state: `${e.exam.id}`,
-                                    f_id_state: `${e.exam.faculty.id}`,
-                                    c_id_state: `${e.exam.course.id}`,
-                                    t_id_state: `${e.exam.teacher.id}`,
-                                    email_state: "pisi@prof.com",
-                                    password_state: "pass",
-                                })
-                        }
-                            )
+                            {
+                                this.setState(
+                                    {
+                                        academicYear_state: `${e.exam.academicYear}`,
+                                        f_name_state: `${e.exam.faculty.name}`,
+                                        c_name_state: `${e.exam.course.name}`,
+                                        c_semester_state: `${e.exam.course.semester}`,
+                                        c_yearOfStudy_state: `${e.exam.course.yearOfStudy}`,
+                                        t_name_state: `${e.exam.teacher.name}`,
+                                        numberOfSeats_state: `${e.numberOfSeats}`,
+                                        date_state: `${e.date}`,
+                                        classroom_state: `${e.classroom}`,
+                                        id_state: `${e.id}`,
+                                        e_id_state: `${e.exam.id}`,
+                                        f_id_state: `${e.exam.faculty.id}`,
+                                        c_id_state: `${e.exam.course.id}`,
+                                        t_id_state: `${e.exam.teacher.id}`,
+                                        email_state: "pisi@prof.com",
+                                        password_state: "pass",
+                                    })
+                            }
+                        )
                     }
                 )
                 .then((exams) =>
@@ -162,7 +162,7 @@ class ExamForm extends Component {
         }
 
     }
-        handlerFacultyChange = (item) => {
+    handlerFacultyChange = (item) => {
         this.setState({
             f_name_state:item.target.value
         })
