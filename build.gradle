@@ -29,7 +29,6 @@ dependencies {
 	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.9'
 
 
-
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.10'
 	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-core
 	compile group: 'org.springframework.security', name: 'spring-security-core', version: '5.3.3.RELEASE'
