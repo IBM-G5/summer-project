@@ -17,61 +17,59 @@ import java.util.List;
 public class ExcelGenerator {
 
     public static ByteArrayInputStream examSchedulesToExcel(List<ExamScheduleDto> examSchedules) throws IOException {
+
         String[] columns = {"id", "classroom", "date", "numberOfSeats", "exam_id"};
 
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        //Workbook workbook = new XSSFWorkbook();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-                HSSFWorkbook workbook = new HSSFWorkbook();
-                //Workbook workbook = new XSSFWorkbook();
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        CreationHelper creationHelper = workbook.getCreationHelper();
 
+        //Sheet sheet = workbook.createSheet("ExamSchedules");
+        XSSFSheet sheet = workbook.createSheet("Exam Schedules");
 
-            CreationHelper creationHelper = workbook.getCreationHelper();
+        Font headerFont = workbook.createFont();
+        headerFont.setColor(IndexedColors.DARK_BLUE.getIndex());
 
-            //Sheet sheet = workbook.createSheet("ExamSchedules");
-            HSSFSheet sheet = workbook.createSheet("ExamSchedules");
+        CellStyle headerCellStyle = workbook.createCellStyle();
+        headerCellStyle.setFont(headerFont);
 
-            Font headerFont = workbook.createFont();
-            //headerFont.setBold(true);
-            headerFont.setColor(IndexedColors.DARK_BLUE.getIndex());
+        //row for header
+        Row headerRow = sheet.createRow(0);
 
-            CellStyle headerCellStyle = workbook.createCellStyle();
-            headerCellStyle.setFont(headerFont);
-
-            //row for header
-            Row headerRow = sheet.createRow(0);
-
-            //header
-            for (int column = 0; column < columns.length; column++) {
-                Cell cell = headerRow.createCell(column);
-                cell.setCellValue(columns[column]);
-                cell.setCellStyle(headerCellStyle);
-            }
-
-            //cellstyle for date
-            CellStyle dateCellStyle = workbook.createCellStyle();
-            dateCellStyle.setDataFormat(creationHelper.createDataFormat().getFormat("#"));
-
-            int rowIndex = 1;
-            for (ExamScheduleDto examSchedule :
-                    examSchedules) {
-                Row row = sheet.createRow(rowIndex++);
-
-                row.createCell(0).setCellValue(examSchedule.getId());
-                row.createCell(1).setCellValue(examSchedule.getClassroom());
-
-                Cell dateCell = row.createCell(2);
-                dateCell.setCellValue(examSchedule.getDate());
-                dateCell.setCellStyle(dateCellStyle);
-
-                row.createCell(3).setCellValue(examSchedule.getNumberOfSeats());
-                row.createCell(4).setCellValue(examSchedule.getExam().getId());
-            }
-
-            workbook.write(outputStream);
-            return new ByteArrayInputStream(outputStream.toByteArray());
+        //header
+        for (int column = 0; column < columns.length; column++) {
+            Cell cell = headerRow.createCell(column);
+            cell.setCellValue(columns[column]);
+            cell.setCellStyle(headerCellStyle);
         }
 
+        //cellstyle for date
+        CellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(creationHelper.createDataFormat().getFormat("#"));
+
+        int rowIndex = 1;
+        for (ExamScheduleDto examSchedule :
+                examSchedules) {
+            Row row = sheet.createRow(rowIndex++);
+
+            row.createCell(0).setCellValue(examSchedule.getId());
+            row.createCell(1).setCellValue(examSchedule.getClassroom());
+
+            Cell dateCell = row.createCell(2);
+            dateCell.setCellValue(examSchedule.getDate());
+            dateCell.setCellStyle(dateCellStyle);
+
+            row.createCell(3).setCellValue(examSchedule.getNumberOfSeats());
+            row.createCell(4).setCellValue(examSchedule.getExam().getId());
+        }
+
+        workbook.write(outputStream);
+        return new ByteArrayInputStream(outputStream.toByteArray());
     }
+
+}
 
 
 
