@@ -1,0 +1,38 @@
+[
+    {
+        "id": "1",
+        "faculty":"AC",
+        "year":"2",
+        "course": "FIE",
+        "teacher":"Greco",
+        "date": "10.01.2020",
+        "class": "A101"
+    },
+    {
+        "id": "2",
+        "faculty":"AC",
+        "year":"2",
+        "course": "FIE",
+        "teacher":"Greco",
+        "date": "10.01.2020",
+        "class": "A101"
+    },
+    {
+        "id": "3",
+        "faculty":"AC",
+        "year":"2",
+        "course": "FIE",
+        "teacher":"Greco",
+        "date": "10.01.2020",
+        "class": "A101"
+    },
+    {
+        "id": "4",
+        "faculty":"AC",
+        "year":"2",
+        "course": "FIE",
+        "teacher":"Greco",
+        "date": "10.01.2020",
+        "class": "A101"
+    }
+]

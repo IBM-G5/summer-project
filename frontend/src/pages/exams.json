@@ -1,0 +1,32 @@
+[
+    {
+        "id":"1",
+        "faculty":"Automatica si Calculatoare",
+        "course":"Analiza Matematica",
+        "study_year":"1",
+        "teacher":"Doru Paunescu",
+        "date":"10.02.2020",
+        "time": "10:00",
+        "class":"A101"
+    },
+    {
+        "id":"2",
+        "faculty":"Mecanica",
+        "course":"Mecatronica",
+        "study_year":"3",
+        "teacher":"Muresan Florin",
+        "date":"20.03.2020",
+        "time": "10:00",
+        "class":"D1"
+    },
+    {
+        "id":"3",
+        "faculty":"Automatica si Calculatoare",
+        "course":"Logica si structuri discrete",
+        "study_year":"2",
+        "teacher":"Stanciu ",
+        "date":"11.01.2020",
+        "time": "13:00",
+        "class":"A106"
+    }
+]
