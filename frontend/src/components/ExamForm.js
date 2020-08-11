@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Button from "react-bootstrap/cjs/Button";
-import exams from '../datas/exams.json';
 
 class ExamForm extends Component {
     constructor(props) {
@@ -13,11 +12,13 @@ class ExamForm extends Component {
             f_name_state: null,
             c_id_state: null,
             c_name_state: null,
-            yearOfStudy_state: null,
-            semester_state: 2,
+            c_semester_state: null,
+            c_yearOfStudy_state: null,
+            // yearOfStudy_state: null,
+            // semester_state: 2,
             t_id_state: null,
             t_name_state: null,
-            email_state: "@mail",
+            email_state: "pisi@prof.com",
             password_state: "pass",
             numberOfSeats_state: null,
             date_state: null,
@@ -41,6 +42,8 @@ class ExamForm extends Component {
                     course:{
                         id:`${this.state.c_id_state}`,
                         name: `${this.state.c_name_state}`,
+                        semester: `${this.state.c_semester_state}`,
+                        yearOfStudy: `${this.state.c_yearOfStudy_state}`
                     },
                     teacher:{
                         id:`${this.state.t_id_state}`,
@@ -52,7 +55,10 @@ class ExamForm extends Component {
                 numberOfSeats:`${this.state.numberOfSeats_state}`,
                 date: `${this.state.date_state}`,
                 classroom: `${this.state.classroom_state}`
-            })
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
             .then(response => response.json())
             .then(data => {
@@ -62,47 +68,52 @@ class ExamForm extends Component {
             .catch((error) => {
                 console.error('Error:', error);
             });
-    }
-    handlerFacultyChange=(item)=>{
+    };
+    handlerFacultyChange = (item) => {
         this.setState({
-            f_name_state:item.target.value,
+            f_name_state:item.target.value
         })
-    }
-    handlerYearOfStudyChange=(item)=>{
+    };
+    handlerYearOfStudyChange = (item) => {
         this.setState({
-            yearOfStudy_state:item.target.value,
+            c_yearOfStudy_state:item.target.value
         })
-    }
-    handlerCourseChange=(item)=>{
+    };
+    handlerSemesterChange = (item) => {
         this.setState({
-            c_name_state:item.target.value,
+            c_semester_state: item.target.value
         })
-    }
-    handlerAcademicYearChange=(item)=>{
+    };
+    handlerCourseChange = (item) => {
         this.setState({
-            academicYear_state:item.target.value,
+            c_name_state:item.target.value
         })
-    }
-    handlerTeacherChange=(item)=>{
+    };
+    handlerAcademicYearChange = (item) => {
         this.setState({
-            t_name_state:item.target.value,
+            academicYear_state:item.target.value
         })
-    }
-    handlerNoOfSeatsChange=(item)=>{
+    };
+    handlerTeacherChange = (item) => {
         this.setState({
-            numberOfSeats_state:item.target.value,
+            t_name_state:item.target.value
         })
-    }
-    handlerClassRoomChange=(item)=>{
+    };
+    handlerNoOfSeatsChange = (item) => {
         this.setState({
-            classroom_state:item.target.value,
+            numberOfSeats_state:item.target.value
         })
-    }
-    handlerDataChange=(item)=>{
+    };
+    handlerClassRoomChange = (item) => {
         this.setState({
-            date_state:item.target.value,
+            classroom_state:item.target.value
         })
-    }
+    };
+    handlerDataChange = (item) => {
+        this.setState({
+            date_state:item.target.value
+        })
+    };
 
 
     render() {
@@ -136,12 +147,12 @@ class ExamForm extends Component {
                             </select>
                         </div>
                         <div className="col">
-                            <label>Year of study</label>
-                            <select className="form-control" value={this.state.yearOfStudy_state} onChange={this.handlerYearOfStudyChange} required>
-                                <option value="" disabled selected>Select the year of study</option>
+                            <label>Teacher</label>
+                            <select className="form-control" value={this.state.t_name_state} onChange={this.handlerTeacherChange} required>
+                                <option value="" disabled selected>Select a teacher</option>
                                 {
-                                    [1, 2, 3, 4, 5, 6].map((y) =>
-                                        <option value={y}>{y} year</option>
+                                    teachers.map((t) =>
+                                        <option value={t}>{t}</option>
                                     )
                                 }
                             </select>
@@ -151,7 +162,7 @@ class ExamForm extends Component {
                     <div className="form-row">
                         <div className="col">
                             <label>Course</label>
-                            <select className="form-control" value={this.state.c_name_state} onChange={this.handlerCourseChange}required>
+                            <select className="form-control" value={this.state.c_name_state} onChange={this.handlerCourseChange} required>
                                 <option value="" disabled selected>Select a course</option>
                                 {
                                     courses.map((c) =>
@@ -161,12 +172,23 @@ class ExamForm extends Component {
                             </select>
                         </div>
                         <div className="col">
-                            <label>Teacher</label>
-                            <select className="form-control" value={this.state.t_name_state} onChange={this.handlerTeacherChange}required>
-                                <option value="" disabled selected>Select a teacher</option>
+                            <label>Year of study</label>
+                            <select className="form-control" value={this.state.c_yearOfStudy_state} onChange={this.handlerYearOfStudyChange} required>
+                                <option value="" disabled selected>Select the year of study</option>
                                 {
-                                    teachers.map((t) =>
-                                        <option value={t}>{t}</option>
+                                    [1, 2, 3, 4, 5, 6].map((y) =>
+                                        <option value={y}>{y}</option>
+                                    )
+                                }
+                            </select>
+                        </div>
+                        <div className="col">
+                            <label>Semester</label>
+                            <select className="form-control" value={this.state.c_semester_state} onChange={this.handlerSemesterChange} required>
+                                <option value="" disabled selected>Select the semester</option>
+                                {
+                                    [1, 2].map((y) =>
+                                        <option value={y}>{y}</option>
                                     )
                                 }
                             </select>
