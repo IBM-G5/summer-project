@@ -1,9 +1,11 @@
 package com.summerproject.project.service;
 
 import com.summerproject.project.dto.ExamScheduleDto;
+import com.summerproject.project.entity.Exam;
 import com.summerproject.project.entity.ExamSchedule;
 import com.summerproject.project.entity.Faculty;
 import com.summerproject.project.mapper.ExamScheduleDtoEntityMapper;
+import com.summerproject.project.repository.ExamRepository;
 import com.summerproject.project.repository.ExamScheduleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,9 @@ import java.util.stream.Collectors;
 public class ExamScheduleServiceImpl implements ExamScheduleService{
 
     @Autowired
+    ExamRepository examRepository;
+
+    @Autowired
     ExamScheduleRepository examScheduleRepository;
 
     @Autowired
@@ -28,7 +33,9 @@ public class ExamScheduleServiceImpl implements ExamScheduleService{
     @Override
     public ExamScheduleDto addExamSchedule(ExamScheduleDto examSchedule) {
         logger.info(examSchedule.toString() + " added");
-        return examScheduleDtoEntityMapper.from(examScheduleRepository.save(examScheduleDtoEntityMapper.from(examSchedule)));
+        Exam exam = examRepository.save(examScheduleDtoEntityMapper.from(examSchedule).getExam());
+        examSchedule.setExam(exam);
+       return examScheduleDtoEntityMapper.from(examScheduleRepository.save(examScheduleDtoEntityMapper.from(examSchedule)));
     }
 
     @Override
