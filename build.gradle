@@ -23,10 +23,10 @@ dependencies {
 	}
 
 	// https://mvnrepository.com/artifact/org.apache.poi/poi
-	compile group: 'org.apache.poi', name: 'poi', version: '3.17'
+	compile group: 'org.apache.poi', name: 'poi', version: '3.9'
 
 	// https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
-	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.9'
 
 
 

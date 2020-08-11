@@ -16,17 +16,17 @@ public class ExcelGenerator {
     public static ByteArrayInputStream examSchedulesToExcel(List<ExamScheduleDto> examSchedules) throws IOException {
         String[] columns = {"id", "classroom", "date", "numberOfSeats", "exam_id"};
 
-        try (
-                Workbook workbook = new XSSFWorkbook();
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ) {
+
+            Workbook workbook = new XSSFWorkbook();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
 
             CreationHelper creationHelper = workbook.getCreationHelper();
 
             Sheet sheet = workbook.createSheet("ExamSchedules");
 
             Font headerFont = workbook.createFont();
-            headerFont.setBold(true);
+           // headerFont.setBold(true);
             headerFont.setColor(IndexedColors.DARK_BLUE.getIndex());
 
             CellStyle headerCellStyle = workbook.createCellStyle();
@@ -47,7 +47,7 @@ public class ExcelGenerator {
             dateCellStyle.setDataFormat(creationHelper.createDataFormat().getFormat("#"));
 
             int rowIndex = 1;
-            for (ExamScheduleDto  examSchedule :
+            for (ExamScheduleDto examSchedule :
                     examSchedules) {
                 Row row = sheet.createRow(rowIndex++);
 
@@ -66,4 +66,4 @@ public class ExcelGenerator {
             return new ByteArrayInputStream(outputStream.toByteArray());
         }
     }
-}
+
