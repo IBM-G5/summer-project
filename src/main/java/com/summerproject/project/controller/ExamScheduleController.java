@@ -24,8 +24,11 @@ public class ExamScheduleController {
     }
 
     @DeleteMapping("/delete/{id}")
-    List<ExamScheduleDto> removeExamSchedule (@PathVariable Long id) throws Exception {
-        return examScheduleService.deleteExamSchedule(id);
+    ResponseEntity<ExamScheduleDto> removeExamSchedule (@PathVariable Long id) throws Exception {
+        ExamScheduleDto examScheduleDto = examScheduleService.deleteExamSchedule(id);
+        if (examScheduleDto != null)
+            return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/getall")
