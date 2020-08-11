@@ -1,13 +1,8 @@
 package com.summerproject.project.controller;
 
-import com.summerproject.project.dto.CourseDto;
 import com.summerproject.project.dto.ExamScheduleDto;
-import com.summerproject.project.dto.FacultyDto;
-import com.summerproject.project.dto.TeacherDto;
-import com.summerproject.project.entity.Course;
 import com.summerproject.project.entity.Faculty;
 import com.summerproject.project.excel.ExcelGenerator;
-import com.summerproject.project.entity.Teacher;
 import com.summerproject.project.mapper.ExamScheduleDtoEntityMapper;
 import com.summerproject.project.service.ExamScheduleService;
 import lombok.RequiredArgsConstructor;
@@ -49,11 +44,8 @@ public class ExamScheduleController {
     }
 
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<ExamScheduleDto> removeExamSchedule (@PathVariable Long id) throws Exception {
-        ExamScheduleDto examScheduleDto = examScheduleService.deleteExamSchedule(id);
-        if (examScheduleDto != null)
-            return new ResponseEntity<>(HttpStatus.OK);
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    List<ExamScheduleDto> removeExamSchedule (@PathVariable Long id) throws Exception {
+        return examScheduleService.deleteExamSchedule(id);
     }
 
     @GetMapping("/getall")
@@ -105,38 +97,6 @@ public class ExamScheduleController {
             return new ResponseEntity<>(listExamScheduleDto, HttpStatus.OK);
         }
     }
-
-    @GetMapping (value ="/getAllCourses")
-    public ResponseEntity<List<CourseDto>> getAllCourses(){
-        List<CourseDto> coursesDto = examScheduleService.getAllCourses();
-        if (coursesDto.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(coursesDto, HttpStatus.OK);
-        }
-    }
-
-    @GetMapping (value ="/getAllTeachers")
-    public ResponseEntity<List<TeacherDto>> getAllTeachers(){
-        List<TeacherDto> teachersDto = examScheduleService.getAllTeachers();
-        if (teachersDto.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(teachersDto, HttpStatus.OK);
-        }
-    }
-
-    @GetMapping (value ="/getAllFaculties")
-    public ResponseEntity<List<FacultyDto>> getAllFaculties(){
-        List<FacultyDto> facultiesDto = examScheduleService.getAllFaculties();
-        if (facultiesDto.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(facultiesDto, HttpStatus.OK);
-        }
-    }
-
-
 
 
 }

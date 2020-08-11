@@ -7,22 +7,17 @@ import {Modal} from "react-bootstrap";
 import logoTransparent from "../img/logo_transparent.png";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ExamForm from "./ExamForm";
-import axios from "axios";
 
 
 class ProfessorPageContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            add: true,
-            update: true,
             isLoading: true,
             exams: [],
-            addExamModalShow: false,
-            updateExamModalShow: false,
+            show: false,
             deleteExamModalShow: false,
-            examToBeDeleted: -1,
-            examToBeUpdated: -1
+            examToBeDeleted: -1
         };
     }
 
@@ -56,17 +51,10 @@ class ProfessorPageContainer extends Component {
     AddExamHandler()
     {
         this.setState({
-            addExamModalShow: !this.state.addExamModalShow
+            show: !this.state.show
         })
     }
 
-    UpdateExamHandler(id)
-    {
-        this.setState({
-            updateExamModalShow: !this.state.updateExamModalShow,
-            examToBeUpdated: id
-        })
-    }
     DeleteExamHandler(id)
     {
         this.setState({
@@ -75,17 +63,27 @@ class ProfessorPageContainer extends Component {
         })
     }
 
-    DeleteExam()
+    DeleteExam(id)
     {
-        axios.delete('http://localhost:8080/delete/' + this.state.examToBeDeleted)
-            .then(response  => {
-                this.setState(
-                    {
-                        examToBeDeleted: -1
-                    }
-                );
-                window.location.reload();
-            });
+        fetch('http://localhost:8080/delete/'+this.state.examToBeDeleted)
+        .then((response) => response.json())
+            .then((parsedJSON) =>
+                parsedJSON.map((examen, i) => ({
+                    classroom: `${examen.classroom}`,
+                    date: `${examen.date}`,
+                    examInfo: `${examen}`,
+                    id: `${examen.id}`,
+                    index: i,
+                    numberOfSeats: `${examen.numberOfSeats}`,
+                    teacher: `${examen.exam.teacher.name}`,
+                    course: `${examen.exam.course.name}`
+                }))
+            )
+            .then((exams) =>
+                this.setState({
+                    exams,
+                    deleteExamModalShow: !this.state.deleteExamModalShow
+                }))
     }
 
     render() {
@@ -124,18 +122,10 @@ class ProfessorPageContainer extends Component {
                         Add Exam Schedule
                     </Button>{' '}
 
-                    <Modal show={this.state.addExamModalShow} onHide={()=>this.AddExamHandler()}>
+                    <Modal show={this.state.show} onHide={()=>this.AddExamHandler()}>
                         <Modal.Header closeButton ><h5>Add Exam</h5></Modal.Header>
                         <Modal.Body>
-                            <ExamForm add={this.state.add}></ExamForm>
-                        </Modal.Body>
-                        <Modal.Footer/>
-                    </Modal>
-
-                    <Modal show={this.state.updateExamModalShow} onHide={()=>this.UpdateExamHandler()}>
-                        <Modal.Header closeButton ><h5>Update Exam</h5></Modal.Header>
-                        <Modal.Body>
-                            <ExamForm examToBeUpdated={this.state.examToBeUpdated} update={this.state.update} ></ExamForm>
+                            <ExamForm></ExamForm>
                         </Modal.Body>
                         <Modal.Footer/>
                     </Modal>
@@ -178,7 +168,6 @@ class ProfessorPageContainer extends Component {
                 <Table striped bordered hover className="mt-3">
                     <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Course</th>
                         <th>Teacher</th>
                         <th>Date</th>
@@ -194,19 +183,18 @@ class ProfessorPageContainer extends Component {
                             const {classroom, date, examInfo, id, index, numberOfSeats, teacher, course} = examen;
                             return (
                                 <tr key={index}>
-                                    <td key={id}>{id}</td>
                                     <td key={course}>{course}</td>
                                     <td key={teacher}>{teacher}</td>
                                     <td key={date}>{new Date(date).toString()}</td>
                                     <td key={classroom}>{classroom}</td>
-                                    <td key={numberOfSeats}>{numberOfSeats}</td>
+                                    <td key={id, numberOfSeats}>{numberOfSeats}</td>
                                     <td>
-                                        <Button onClick={()=>this.DeleteExamHandler(id)} variant="danger">
+                                        <Button onClick={()=>this.DeleteExamHandler()} variant="danger">
                                             Delete
                                         </Button>{' '}
                                     </td>
                                     <th>
-                                        <Button onClick={()=>this.UpdateExamHandler(id)} variant="secondary">
+                                        <Button variant="secondary">
                                             Update
                                         </Button>
                                     </th>
@@ -215,7 +203,7 @@ class ProfessorPageContainer extends Component {
                         })
                     ) : (
                         <tr>
-                            <td colSpan="8">
+                            <td colSpan="7">
                                 <h5>No exams to be displayed.</h5>
                             </td>
                         </tr>
