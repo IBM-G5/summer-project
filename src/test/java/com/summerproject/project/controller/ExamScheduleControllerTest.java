@@ -3,8 +3,7 @@ package com.summerproject.project.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.summerproject.project.dto.CourseDto;
-import com.summerproject.project.dto.ExamScheduleDto;
+import com.summerproject.project.dto.*;
 import com.summerproject.project.entity.Course;
 import com.summerproject.project.entity.Exam;
 import com.summerproject.project.entity.Faculty;
@@ -51,7 +50,23 @@ class ExamScheduleControllerTest {
     private ExamScheduleService examScheduleService;
 
     @Test
+    @DisplayName("List of exam schedules is returned")
     void testListOfExamSchedulesIsSuccessfullyReturned() throws Exception {
+        Faculty faculty = Faculty.builder().id(1L).name("FMI").build();
+        Course course = Course.builder().id(1L).name("AI").semester(2).yearOfStudy(1).build();
+        Teacher teacher = Teacher.builder().id(1L).email("a.b@prof.com").name("a b").password("pass123").build();
+        Exam exam = Exam.builder().id(1L).academicYear(2020).course(course).faculty(faculty).teacher(teacher).build();
+
+        ExamScheduleDto examScheduleDto1 = ExamScheduleDto.builder().id(1L).classroom("D100").date(new Date()).numberOfSeats(150).exam(exam).build();
+        ExamScheduleDto examScheduleDto = ExamScheduleDto.builder().classroom("D100").date(null).numberOfSeats(110).exam(exam).build();
+
+        List<ExamScheduleDto> examScheduleDtoList = Arrays.asList(examScheduleDto);
+        ObjectMapper mapper = new ObjectMapper();
+
+        Mockito.when(examScheduleService.getAllExamSchedules()).thenReturn(examScheduleDtoList);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/getall")).andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().bytes(mapper.writeValueAsBytes(examScheduleDtoList)));
     }
 
     @Test
@@ -70,13 +85,25 @@ class ExamScheduleControllerTest {
     @Test
     @DisplayName("List of faculties is returned")
     void testListOfFacultiesIsSuccessfullyReturned() throws Exception {
+        FacultyDto facultyDto = FacultyDto.builder().name("Facultatea de Matematica si Informatica").build();
+        List<FacultyDto> facultyDtoList = Arrays.asList(facultyDto);
+        ObjectMapper mapper = new ObjectMapper();
 
+        Mockito.when(examScheduleService.getAllFaculties()).thenReturn(facultyDtoList );
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/getAllFaculties")).andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().bytes(mapper.writeValueAsBytes(facultyDtoList)));
     }
+
 
     @Test
     @DisplayName("List of teachers is returned")
     void testListOfTeachersIsSuccessfullyReturned() throws Exception {
-
+        TeacherDto teacherDto = TeacherDto.builder().email("a.b@prof.com").name("a b").password("pass123").build();
+        List<TeacherDto> teacherDtoList = Arrays.asList(teacherDto);
+        ObjectMapper mapper = new ObjectMapper();
+        Mockito.when(examScheduleService.getAllTeachers()).thenReturn(teacherDtoList );
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/getAllTeachers")).andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().bytes(mapper.writeValueAsBytes(teacherDtoList)));
     }
 
 //    "{\"id\":1,\"exam\":{\"id\":1,\"academicYear\":2019,\"faculty\":{\"id\":1,\"name\":\"Computer Science\"},\"course\":{\"id\":1,\"name\":\"AI\",\"yearOfStudy\":2,\"semester\":2},\"teacher\":{\"id\":1,\"name\":\"Ion Popescu\",\"email\":\"ion.popescu@prof.com\",\"password\":\"admin\"}},\"numberOfSeats\":150,\"date\":1597006800000,\"classroom\":\"A2\"}"
