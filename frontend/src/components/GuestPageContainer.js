@@ -5,8 +5,6 @@ import Dropdown from "react-bootstrap/Dropdown";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 import logoTransparent from "../img/logo_transparent.png";
-import Dropdown from "react-bootstrap/Dropdown";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 class GuestPageContainer extends Component {
   constructor(props) {
@@ -23,7 +21,7 @@ class GuestPageContainer extends Component {
 
     componentDidMount() {
         this.fetchData();
-        this.facultyHandler();
+        //this.facultyHandler();
     }
 
     fetchData() {
