@@ -121,13 +121,23 @@ class ExamScheduleControllerTest {
     @Test
     @DisplayName("Delete an exam schedule successfully")
     void testDeleteExamScheduleSuccessfully() throws Exception {
+        final Faculty faculty = Faculty.builder().name("Computer Science").build();
+        final Course course = Course.builder().name("Functional Programming").semester(1).yearOfStudy(2).build();
+        final Teacher teacher = Teacher.builder().email("ian.popescu@prof.com").password("admin").name("Ian Popescu").build();
+        final Exam exam = Exam.builder().academicYear(2019).faculty(faculty).course(course).teacher(teacher).build();
+        final ExamScheduleDto examScheduleDto = ExamScheduleDto.builder().date(new Date()).classroom("D100").numberOfSeats(150).exam(exam).build();
 
+
+        Mockito.when(examScheduleService.deleteExamSchedule(1L)).thenReturn(examScheduleDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/delete/1").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     @DisplayName("Delete an exam schedule failed")
     void testDeleteExamScheduleFailed() throws Exception {
-
+        Mockito.when(examScheduleService.deleteExamSchedule(100L)).thenReturn(null);
+        mockMvc.perform(MockMvcRequestBuilders.delete("/delete/1").contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Test
