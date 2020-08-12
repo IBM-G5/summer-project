@@ -34,6 +34,7 @@ import org.junit.*;
 import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -231,12 +232,45 @@ class ExamScheduleControllerTest {
     @Test
     @DisplayName("Filter exam schedules by year of study succesfully")
     void testFilterExamSchedulesByYearOfStudySuccessfully() throws Exception {
+        Faculty faculty = Faculty.builder().id(1L).name("FMI").build();
+        Course course = Course.builder().id(1L).name("AI").semester(2).yearOfStudy(1).build();
+        Teacher teacher = Teacher.builder().id(1L).email("a.b@prof.com").name("a b").password("pass123").build();
+        Exam exam = Exam.builder().id(1L).academicYear(2020).course(course).faculty(faculty).teacher(teacher).build();
+
+        ExamScheduleDto examScheduleDto1 = ExamScheduleDto.builder().id(1L).classroom("D100").date(new Date()).numberOfSeats(150).exam(exam).build();
+        ExamScheduleDto examScheduleDto = ExamScheduleDto.builder().classroom("D100").date(null).numberOfSeats(110).exam(exam).build();
+
+        List<ExamScheduleDto> examScheduleDtoList = Arrays.asList(examScheduleDto);
+        ObjectMapper mapper = new ObjectMapper();
+
+        Mockito.when(examScheduleService.getAllExamSchedulesFilterByYearOfStudy(1)).thenReturn(examScheduleDtoList);
+        mockMvc.perform(MockMvcRequestBuilders.get("/filterByYearOfStudy/{yearOfStudy}", 1))
+                .andDo(MockMvcResultHandlers.print())
+               // .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.content().bytes(mapper.writeValueAsBytes(examScheduleDtoList)));
+
 
     }
 
     @Test
     @DisplayName("Filter exam schedules by year of study failed")
     void testFilterExamSchedulesByYearOfStudyFailed() throws Exception {
+        Faculty faculty = Faculty.builder().id(1L).name("FMI").build();
+        Course course = Course.builder().id(1L).name("AI").semester(2).yearOfStudy(1).build();
+        Teacher teacher = Teacher.builder().id(1L).email("a.b@prof.com").name("a b").password("pass123").build();
+        Exam exam = Exam.builder().id(1L).academicYear(2020).course(course).faculty(faculty).teacher(teacher).build();
+
+        ExamScheduleDto examScheduleDto1 = ExamScheduleDto.builder().id(1L).classroom("D100").date(new Date()).numberOfSeats(150).exam(exam).build();
+        ExamScheduleDto examScheduleDto = ExamScheduleDto.builder().classroom("D100").date(new Date()).numberOfSeats(110).exam(exam).build();
+
+        List<ExamScheduleDto> examScheduleDtoList = Collections.emptyList();
+        ObjectMapper mapper = new ObjectMapper();
+
+        Mockito.when(examScheduleService.getAllExamSchedulesFilterByYearOfStudy(2)).thenReturn(Collections.emptyList());
+        mockMvc.perform(MockMvcRequestBuilders.get("/filterByYearOfStudy/{yearOfStudy}", 1))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+        // .andExpect(MockMvcResultMatchers.content().bytes(mapper.writeValueAsBytes(examScheduleDtoList)));
 
     }
 
