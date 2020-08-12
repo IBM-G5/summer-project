@@ -297,12 +297,47 @@ class ExamScheduleControllerTest {
     @Test
     @DisplayName("Filter exam schedules by faculty and year of study successfully")
     void testFilterExamSchedulesByFacultyAndYearOfStudySuccessfully() throws Exception {
+        final Faculty faculty = Faculty.builder().id(1L).name("Mecanica").build();
+        final Course course = Course.builder().id(1L).name("Functional Programming").semester(1).yearOfStudy(1).build();
+        final Teacher teacher = Teacher.builder().id(1L).email("ian.popescu@prof.com").password("admin").name("Ian Popescu").build();
+        final Exam exam = Exam.builder().id(1L).academicYear(2019).faculty(faculty).course(course).teacher(teacher).build();
+        final ExamScheduleDto examScheduleDto1 = ExamScheduleDto.builder().id(1L).date(null).classroom("D100").numberOfSeats(150).exam(exam).build();
 
+        final Faculty faculty2 = Faculty.builder().id(2L).name("Mecanica").build();
+        final Course course2 = Course.builder().id(2L).name("Functional Programming").semester(1).yearOfStudy(1).build();
+        final Teacher teacher2 = Teacher.builder().id(2L).email("ian.popescu@prof.com").password("admin").name("Ian Popescu").build();
+        final Exam exam2 = Exam.builder().id(2L).academicYear(2019).faculty(faculty2).course(course2).teacher(teacher2).build();
+        final ExamScheduleDto examScheduleDto2 = ExamScheduleDto.builder().id(1L).date(null).classroom("D100").numberOfSeats(150).exam(exam2).build();
+
+        final List<ExamScheduleDto> listExamScheduleDto = Arrays.asList(examScheduleDto1, examScheduleDto2);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        Mockito.when(examScheduleService.getAllExamSchedulesFilterByYearOfStudyAndFaculty(course.getYearOfStudy(), faculty.getName())).thenReturn(listExamScheduleDto);
+        mockMvc.perform(MockMvcRequestBuilders.get("/filterByYearOfStudyAndFaculty/{faculty}&{yearOfStudy}", 1, "Mecanica")).andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().bytes(mapper.writeValueAsBytes(listExamScheduleDto)));
     }
 
     @Test
     @DisplayName("Filter exam schedules by faculty and year of study failed")
     void testFilterExamSchedulesByFacultyAndYearOfStudyFailed() throws Exception {
+        final Faculty faculty = Faculty.builder().id(1L).name("Mecanica").build();
+        final Course course = Course.builder().id(1L).name("Functional Programming").semester(1).yearOfStudy(1).build();
+        final Teacher teacher = Teacher.builder().id(1L).email("ian.popescu@prof.com").password("admin").name("Ian Popescu").build();
+        final Exam exam = Exam.builder().id(1L).academicYear(2019).faculty(faculty).course(course).teacher(teacher).build();
+        final ExamScheduleDto examScheduleDto1 = ExamScheduleDto.builder().id(1L).date(null).classroom("D100").numberOfSeats(150).exam(exam).build();
 
+        final Faculty faculty2 = Faculty.builder().id(2L).name("Mecanica").build();
+        final Course course2 = Course.builder().id(2L).name("Functional Programming").semester(1).yearOfStudy(1).build();
+        final Teacher teacher2 = Teacher.builder().id(2L).email("ian.popescu@prof.com").password("admin").name("Ian Popescu").build();
+        final Exam exam2 = Exam.builder().id(2L).academicYear(2019).faculty(faculty2).course(course2).teacher(teacher2).build();
+        final ExamScheduleDto examScheduleDto2 = ExamScheduleDto.builder().id(1L).date(null).classroom("D100").numberOfSeats(150).exam(exam2).build();
+
+        final List<ExamScheduleDto> listExamScheduleDto = Arrays.asList(examScheduleDto1, examScheduleDto2);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        Mockito.when(examScheduleService.getAllExamSchedulesFilterByYearOfStudyAndFaculty(course.getYearOfStudy(), faculty.getName())).thenReturn(Collections.emptyList());
+        mockMvc.perform(MockMvcRequestBuilders.get("/filterByYearOfStudyAndFaculty/{faculty}&{yearOfStudy}", 1, "Mecanica")).andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 }

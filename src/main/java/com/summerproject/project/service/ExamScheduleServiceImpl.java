@@ -49,8 +49,8 @@ public class ExamScheduleServiceImpl implements ExamScheduleService{
     @Override
     public ExamScheduleDto addExamSchedule(ExamScheduleDto examSchedule) {
         logger.info(examSchedule.toString() + " added");
-//        Exam exam = examService.addExam(examSchedule.getExam());
-//        examSchedule.setExam(exam);
+        Exam exam = examService.addExam(examSchedule.getExam());
+        examSchedule.setExam(exam);
         return examScheduleDtoEntityMapper.from(examScheduleRepository.save(examScheduleDtoEntityMapper.from(examSchedule)));
     }
 
@@ -70,13 +70,11 @@ public class ExamScheduleServiceImpl implements ExamScheduleService{
     public ExamScheduleDto updateExamSchedule(Long examId, ExamScheduleDto examSchedule) throws Exception {
         logger.info(" Exam update" + examSchedule.toString());
         Optional<ExamSchedule> examScheduleOptional = examScheduleRepository.findById(examId);
-        examScheduleOptional.ifPresent(examSchedule1 -> {
-            examScheduleDtoEntityMapper.from(examScheduleRepository.save(examScheduleDtoEntityMapper.from(examSchedule)));
-        });
-        examScheduleOptional.orElseThrow(() ->
-            new Exception(" Exam not found!")
-        );
-        return examScheduleDtoEntityMapper.from(examScheduleRepository.findById(examId).get());
+        return examScheduleOptional.map(examSchedule1 -> {
+            Exam exam = examService.addExam(examSchedule.getExam());
+            examSchedule.setExam(exam);
+            return examScheduleDtoEntityMapper.from(examScheduleRepository.save(examScheduleDtoEntityMapper.from(examSchedule)));
+        }).orElse(null);
     }
 
     @Override
