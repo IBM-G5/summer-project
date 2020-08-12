@@ -148,25 +148,72 @@ class ExamScheduleControllerTest {
     @Test
     @DisplayName("Delete an exam schedule successfully")
     void testDeleteExamScheduleSuccessfully() throws Exception {
+        final Faculty faculty = Faculty.builder().name("Computer Science").build();
+        final Course course = Course.builder().name("Functional Programming").semester(1).yearOfStudy(2).build();
+        final Teacher teacher = Teacher.builder().email("ian.popescu@prof.com").password("admin").name("Ian Popescu").build();
+        final Exam exam = Exam.builder().academicYear(2019).faculty(faculty).course(course).teacher(teacher).build();
+        final ExamScheduleDto examScheduleDto = ExamScheduleDto.builder().date(new Date()).classroom("D100").numberOfSeats(150).exam(exam).build();
 
+
+        Mockito.when(examScheduleService.deleteExamSchedule(1L)).thenReturn(examScheduleDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/delete/1").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     @DisplayName("Delete an exam schedule failed")
     void testDeleteExamScheduleFailed() throws Exception {
-
+        Mockito.when(examScheduleService.deleteExamSchedule(100L)).thenReturn(null);
+        mockMvc.perform(MockMvcRequestBuilders.delete("/delete/1").contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Test
     @DisplayName("Update an exam schedule successfully")
     void testUpdateExamScheduleSuccessfully() throws Exception {
+        final long examId = 1;
+        final Faculty faculty = Faculty.builder().id(1L).name("Computer Science").build();
+        final Course course = Course.builder().id(1L).name("Functional Programming").semester(1).yearOfStudy(2).build();
+        final Teacher teacher = Teacher.builder().id(1L).email("ian.popescu@prof.com").password("admin").name("Ian Popescu").build();
+        final Exam exam = Exam.builder().id(1L).academicYear(2019).faculty(faculty).course(course).teacher(teacher).build();
+        final ExamScheduleDto examScheduleDto = ExamScheduleDto.builder().id(1L).date(null).classroom("D100").numberOfSeats(150).exam(exam).build();
 
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter objectWriter = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson = objectWriter.writeValueAsString(examScheduleDto);
+
+        //mockMvc.perform(MockMvcRequestBuilders.post("/create").contentType(MediaType.APPLICATION_JSON).content(requestJson))
+         //       .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Mockito.when(examScheduleService.updateExamSchedule(examId, examScheduleDto)).thenReturn(examScheduleDto);
+
+        assertEquals(examScheduleDto, examScheduleService.updateExamSchedule(examId, examScheduleDto));
+        mockMvc.perform(MockMvcRequestBuilders.put("/update/{examId}", examId).contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8").content(requestJson))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     @DisplayName("Update an exam schedule failed")
     void testUpdateExamScheduleFailed() throws Exception {
+        final long examId = 1;
+        final Faculty faculty = Faculty.builder().id(1L).name("Computer Science").build();
+        final Course course = Course.builder().id(1L).name("Functional Programming").semester(1).yearOfStudy(2).build();
+        final Teacher teacher = Teacher.builder().id(1L).email("ian.popescu@prof.com").password("admin").name("Ian Popescu").build();
+        final Exam exam = Exam.builder().id(1L).academicYear(2019).faculty(faculty).course(course).teacher(teacher).build();
+        final ExamScheduleDto examScheduleDto = ExamScheduleDto.builder().id(1L).date(null).classroom("D100").numberOfSeats(150).exam(exam).build();
 
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter objectWriter = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson = objectWriter.writeValueAsString(examScheduleDto);
+
+        //mockMvc.perform(MockMvcRequestBuilders.post("/create").contentType(MediaType.APPLICATION_JSON).content(requestJson))
+        //       .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Mockito.when(examScheduleService.updateExamSchedule(examId, examScheduleDto)).thenReturn(null);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/update/{examId}", examId).contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8").content(requestJson))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
     @Test
