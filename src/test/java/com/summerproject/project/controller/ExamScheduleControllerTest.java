@@ -148,7 +148,7 @@ class ExamScheduleControllerTest {
         final Course course = Course.builder().id(1L).name("Functional Programming").semester(1).yearOfStudy(2).build();
         final Teacher teacher = Teacher.builder().id(1L).email("ian.popescu@prof.com").password("admin").name("Ian Popescu").build();
         final Exam exam = Exam.builder().id(1L).academicYear(2019).faculty(faculty).course(course).teacher(teacher).build();
-        final ExamScheduleDto examScheduleDto = ExamScheduleDto.builder().id(1L).date(new Date()).classroom("D100").numberOfSeats(150).exam(exam).build();
+        final ExamScheduleDto examScheduleDto = ExamScheduleDto.builder().id(1L).date(null).classroom("D100").numberOfSeats(150).exam(exam).build();
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -159,14 +159,34 @@ class ExamScheduleControllerTest {
          //       .andExpect(MockMvcResultMatchers.status().isOk());
 
         Mockito.when(examScheduleService.updateExamSchedule(examId, examScheduleDto)).thenReturn(examScheduleDto);
-        mockMvc.perform(MockMvcRequestBuilders.put("/update/1").contentType(MediaType.APPLICATION_JSON).content(requestJson))
+
+        assertEquals(examScheduleDto, examScheduleService.updateExamSchedule(examId, examScheduleDto));
+        mockMvc.perform(MockMvcRequestBuilders.put("/update/{examId}", examId).contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8").content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     @DisplayName("Update an exam schedule failed")
     void testUpdateExamScheduleFailed() throws Exception {
+        final long examId = 1;
+        final Faculty faculty = Faculty.builder().id(1L).name("Computer Science").build();
+        final Course course = Course.builder().id(1L).name("Functional Programming").semester(1).yearOfStudy(2).build();
+        final Teacher teacher = Teacher.builder().id(1L).email("ian.popescu@prof.com").password("admin").name("Ian Popescu").build();
+        final Exam exam = Exam.builder().id(1L).academicYear(2019).faculty(faculty).course(course).teacher(teacher).build();
+        final ExamScheduleDto examScheduleDto = ExamScheduleDto.builder().id(1L).date(null).classroom("D100").numberOfSeats(150).exam(exam).build();
 
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter objectWriter = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson = objectWriter.writeValueAsString(examScheduleDto);
+
+        //mockMvc.perform(MockMvcRequestBuilders.post("/create").contentType(MediaType.APPLICATION_JSON).content(requestJson))
+        //       .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Mockito.when(examScheduleService.updateExamSchedule(examId, examScheduleDto)).thenReturn(null);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/update/{examId}", examId).contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8").content(requestJson))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
     @Test

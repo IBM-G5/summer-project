@@ -70,10 +70,10 @@ public class ExamScheduleController {
     @PutMapping(value = "/update/{examId}")
     public ResponseEntity<ExamScheduleDto> updateExamSchedule(@PathVariable Long examId, @RequestBody ExamScheduleDto examSchedule) throws Exception {
         ExamScheduleDto examScheduleDto = examScheduleService.updateExamSchedule(examId, examSchedule);
-        if(examScheduleDto == null){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
+        if(examScheduleDto != null){
             return new ResponseEntity<>(examScheduleDto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
