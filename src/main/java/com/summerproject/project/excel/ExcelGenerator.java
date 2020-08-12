@@ -47,7 +47,7 @@ public class ExcelGenerator {
 
         //cellstyle for date
         CellStyle dateCellStyle = workbook.createCellStyle();
-        dateCellStyle.setDataFormat(creationHelper.createDataFormat().getFormat("#"));
+        dateCellStyle.setDataFormat(creationHelper.createDataFormat().getFormat("mm-dd-yyyy"));
 
         int rowIndex = 1;
         for (ExamScheduleDto examSchedule :
