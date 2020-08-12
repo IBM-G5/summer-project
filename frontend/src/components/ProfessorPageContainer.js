@@ -22,12 +22,14 @@ class ProfessorPageContainer extends Component {
             updateExamModalShow: false,
             deleteExamModalShow: false,
             examToBeDeleted: -1,
-            examToBeUpdated: -1
+            examToBeUpdated: -1,
+            faculties:[]
         };
     }
 
     componentDidMount() {
         this.fetchData();
+        this.facultyHandler();
     }
 
     fetchData() {
@@ -86,29 +88,27 @@ class ProfessorPageContainer extends Component {
                 window.location.reload();
             });
     }
+    facultyHandler = () => {
+        fetch("http://localhost:8080/getAllFaculties")
+            .then((response) => response.json())
+            .then((parsedJSON) =>
+                parsedJSON.map((f, i) => ({
+                    id: `${f.id}`,
+                    name: `${f.name}`
+                }))
+            )
+            .then((faculties) =>
+                this.setState({
+                    faculties,
+                    f_isLoading: false,
+                })
+            )
+            .catch((error) => console.log("parsing failed", error));
+    }
 
     render() {
 
         const {isLoading} = this.state;
-        const faculty = [
-            {
-                id:1,
-                name:"Automatica si Calculatoare"
-            },
-            {
-                id:2,
-                name:"Mecanica"
-            },
-            {
-                id:3,
-                name:"Constructii"
-            },
-            {
-                id:4,
-                name:"Arhitectura si Urbanism"
-            },
-        ];
-        const yearofstudy=[1,2,3,4,5,6]
         return (
 
             <Container className="vCenterItems shadow p-4">
@@ -154,7 +154,7 @@ class ProfessorPageContainer extends Component {
                         <Dropdown.Toggle> Faculty </Dropdown.Toggle>
                         <Dropdown.Menu>
                             {
-                                faculty.map((faculty)=>
+                                this.state.faculties.map((faculty)=>
                                     <Dropdown.Item eventKey={faculty.id}>{faculty.name}</Dropdown.Item>
                                 )
                             }
@@ -165,7 +165,7 @@ class ProfessorPageContainer extends Component {
                         <Dropdown.Toggle> Year of Study </Dropdown.Toggle>
                         <Dropdown.Menu>
                             {
-                                yearofstudy.map((year)=>
+                                [1,2,3,4,5,6].map((year)=>
                                     <Dropdown.Item eventKey={year}>{year} year</Dropdown.Item>
                                 )
                             }
