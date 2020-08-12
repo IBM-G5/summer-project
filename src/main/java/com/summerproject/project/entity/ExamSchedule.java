@@ -15,6 +15,7 @@ import java.sql.Date;
 @Getter
 @Setter
 @ToString
+@Builder
 @Entity
 public class ExamSchedule {
 

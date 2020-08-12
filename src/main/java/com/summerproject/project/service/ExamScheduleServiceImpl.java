@@ -49,8 +49,8 @@ public class ExamScheduleServiceImpl implements ExamScheduleService{
     @Override
     public ExamScheduleDto addExamSchedule(ExamScheduleDto examSchedule) {
         logger.info(examSchedule.toString() + " added");
-        Exam exam = examService.addExam(examSchedule.getExam());
-        examSchedule.setExam(exam);
+//        Exam exam = examService.addExam(examSchedule.getExam());
+//        examSchedule.setExam(exam);
         return examScheduleDtoEntityMapper.from(examScheduleRepository.save(examScheduleDtoEntityMapper.from(examSchedule)));
     }
 
